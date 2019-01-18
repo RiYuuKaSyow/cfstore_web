@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,8 @@
     <title>fxxkmylife</title>
 </head>
 <body>
-    TEST2
+    <?php
+        header("refresh:0.2 ; url='../web/index.php' ");
+     ?>
 </body>
 </html>
