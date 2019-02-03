@@ -1,12 +1,12 @@
 <?php
     require("../php/set.php") ;
     include("../php/function.php") ;
-    if( isset( $_GET['page'] ) ){
-        $_SESSION['$page'] = $_GET['page'] ;
+    if( isset( $_GET['select'] ) ){
+        $_SESSION['$select'] = $_GET['select'] ;
     }else{
-        $_SESSION['$page'] = 1 ;
+        $_SESSION['$select'] = 1 ;
     }
 
-    $smarty->assign("page" , $_SESSION['$page']) ;
+    $smarty->assign("select" , $_SESSION['$select']) ;
     $smarty->display("../html/boss.html") ;
 ?>

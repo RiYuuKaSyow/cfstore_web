@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-01-23 08:05:54
+/* Smarty version 3.1.32, created on 2019-02-03 14:29:43
   from 'E:\xampp\htdocs\html\boss.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c481252dbfe08_91471289',
+  'unifunc' => 'content_5c56ecc72e25d0_63648382',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7c3dfd9e81ca3541e913229670d405bf844c74bd' => 
     array (
       0 => 'E:\\xampp\\htdocs\\html\\boss.html',
-      1 => 1548227153,
+      1 => 1549200581,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c481252dbfe08_91471289 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c56ecc72e25d0_63648382 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -82,16 +82,16 @@ function content_5c481252dbfe08_91471289 (Smarty_Internal_Template $_smarty_tpl)
     <?php echo '<script'; ?>
  type="text/javascript">
         $(function(){
-            if( <?php echo $_smarty_tpl->tpl_vars['page']->value;?>
+            if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 1 ){
                 $("#status").toggle();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['page']->value;?>
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 2 ) {
                 $("#record").show();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['page']->value;?>
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 3 ) {
                 $("#commodity").show();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['page']->value;?>
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 4 ) {
                 $("#device").show();
             };
@@ -106,16 +106,16 @@ function content_5c481252dbfe08_91471289 (Smarty_Internal_Template $_smarty_tpl)
     <div id="option" >
         <ul>
             <li>
-                <a href="?page=1">商店狀況</a>
+                <a href="?select=1">商店狀況</a>
             </li>
             <li>
-                <a href="?page=2">消費紀錄</a>
+                <a href="?select=2">消費紀錄</a>
             </li>
             <li>
-                <a href="?page=3">商品資訊</a>
+                <a href="?select=3">商品資訊</a>
             </li>
             <li>
-                <a href="?page=4">開關控制</a>
+                <a href="?select=4">開關控制</a>
             </li>
 
             <div id='exit'>

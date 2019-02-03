@@ -48,13 +48,13 @@
     </style>
     <script type="text/javascript">
         $(function(){
-            if( {$page} == 1 ){
+            if( {$select} == 1 ){
                 $("#status").toggle();
-            }else if ( {$page} == 2 ) {
+            }else if ( {$select} == 2 ) {
                 $("#record").show();
-            }else if ( {$page} == 3 ) {
+            }else if ( {$select} == 3 ) {
                 $("#commodity").show();
-            }else if ( {$page} == 4 ) {
+            }else if ( {$select} == 4 ) {
                 $("#device").show();
             };
             $("#exit").click(function(){
@@ -67,16 +67,16 @@
     <div id="option" >
         <ul>
             <li>
-                <a href="?page=1">商店狀況</a>
+                <a href="?select=1">商店狀況</a>
             </li>
             <li>
-                <a href="?page=2">消費紀錄</a>
+                <a href="?select=2">消費紀錄</a>
             </li>
             <li>
-                <a href="?page=3">商品資訊</a>
+                <a href="?select=3">商品資訊</a>
             </li>
             <li>
-                <a href="?page=4">開關控制</a>
+                <a href="?select=4">開關控制</a>
             </li>
 
             <div id='exit'>
