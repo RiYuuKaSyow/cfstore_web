@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-03 15:21:20
+/* Smarty version 3.1.32, created on 2019-02-04 10:36:09
   from 'E:\xampp\htdocs\html\shop.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c56f8e0f3d6c1_85722763',
+  'unifunc' => 'content_5c580789915718_64536656',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9787b6b1b5cf2bae9f32121d5dfc547b6ee6f775' => 
     array (
       0 => 'E:\\xampp\\htdocs\\html\\shop.html',
-      1 => 1549203680,
+      1 => 1549272967,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c56f8e0f3d6c1_85722763 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c580789915718_64536656 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -107,6 +107,25 @@ function content_5c56f8e0f3d6c1_85722763 (Smarty_Internal_Template $_smarty_tpl)
             text-align:center;
         }
     </style>
+    <?php echo '<script'; ?>
+ type="text/javascript">
+        $(function(){
+            var $i = 0 ;
+            function test(){
+                $i++ ;
+                $.ajax({
+                    method:'GET' ,
+                    data: { i:$i } ,
+                    url:'../php/test.php' ,
+                    success: function( response ){
+                        $("#cam").html(response) ;
+                    }
+                })
+            };
+            setInterval(test,100) ;
+        });
+    <?php echo '</script'; ?>
+>
 </head>
 <body>
     <div id="main"class="container row">

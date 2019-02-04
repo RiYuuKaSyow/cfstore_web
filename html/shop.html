@@ -74,6 +74,23 @@
             text-align:center;
         }
     </style>
+    <script type="text/javascript">
+        $(function(){
+            var $i = 0 ;
+            function test(){
+                $i++ ;
+                $.ajax({
+                    method:'GET' ,
+                    data: { i:$i } ,
+                    url:'../php/test.php' ,
+                    success: function( response ){
+                        $("#cam").html(response) ;
+                    }
+                })
+            };
+            setInterval(test,100) ;
+        });
+    </script>
 </head>
 <body>
     <div id="main"class="container row">
