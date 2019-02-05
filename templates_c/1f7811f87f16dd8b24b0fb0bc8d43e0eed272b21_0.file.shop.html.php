@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-05 08:55:49
+/* Smarty version 3.1.32, created on 2019-02-05 11:48:10
   from 'E:\xampp\htdocs\admin\html\shop.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c594185476966_95701129',
+  'unifunc' => 'content_5c5969ea805517_55924693',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f7811f87f16dd8b24b0fb0bc8d43e0eed272b21' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\shop.html',
-      1 => 1549353291,
+      1 => 1549363689,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c594185476966_95701129 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c5969ea805517_55924693 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -118,11 +118,11 @@ function content_5c594185476966_95701129 (Smarty_Internal_Template $_smarty_tpl)
                     data: { action:'test' , i:$i  } ,
                     url:'../../php/function.php' ,
                     success: function( response ){
-                        $("#cam").html(response) ;
+                        $("#cam").html('<img src="../../img/img' + response + '.jpg" alt="">') ;
                     }
                 })
             };
-            setInterval(test,100) ;
+            setInterval(test,1000) ;
         });
     <?php echo '</script'; ?>
 >

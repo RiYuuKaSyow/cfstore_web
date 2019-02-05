@@ -84,11 +84,11 @@
                     data: { action:'test' , i:$i  } ,
                     url:'../../php/function.php' ,
                     success: function( response ){
-                        $("#cam").html(response) ;
+                        $("#cam").html('<img src="../../img/img' + response + '.jpg" alt="">') ;
                     }
                 })
             };
-            setInterval(test,100) ;
+            setInterval(test,1000) ;
         });
     </script>
 </head>

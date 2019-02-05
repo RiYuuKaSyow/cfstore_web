@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-05 09:54:06
+/* Smarty version 3.1.32, created on 2019-02-05 13:36:48
   from 'E:\xampp\htdocs\admin\html\boss.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c594f2eeeee96_82593744',
+  'unifunc' => 'content_5c598360163a61_12415790',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'd29a85a4c8269c74d4bb16b9c9c56c10c53171c5' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\boss.html',
-      1 => 1549356845,
+      1 => 1549370207,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c598360163a61_12415790 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -51,9 +51,6 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>無人商店</title>
     <style type="text/css">
-        #exit{
-            margin-top: 100px;
-        }
         #option{
             width:11%;
             position:fixed;
@@ -67,11 +64,17 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
             color:black;
             text-decoration:none;
         }
-        #exit{
-            margin-top: 100px;
+        #btn-exlo{
+            position: fixed ;
+            margin-top: 100px ;
+            top:60% ;
+            left:2% ;
+            width:20% ;
         }
-        #surronding_table{
-            margin: 2% 0 2% 0 ;
+
+        #goods img{
+            max-width:150px ;
+            max-height:150px ;
         }
         .main_frame{
             position: relative;
@@ -80,6 +83,7 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
             width: 80%;
             border-style: none;
             display: none;
+            margin-top: 1% ;
         }
     </style>
     <?php echo '<script'; ?>
@@ -101,6 +105,11 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
             $("#exit").click(function(){
                 window.location.href = '../index.php' ;
             });
+            $("#logout").click(function(){
+                if( confirm("確定要登出嗎") ){
+                    window.location.href = '../../C8763/web/' ;
+                };
+            });
         });
     <?php echo '</script'; ?>
 >
@@ -109,7 +118,7 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
     <div id="option" >
         <ul>
             <li>
-                <a id="status_a" href="?select=1">商店狀況</a>
+                <a href="?select=1">商店狀況</a>
             </li>
             <li>
                 <a href="?select=2">消費紀錄</a>
@@ -120,13 +129,15 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
             <li>
                 <a href="?select=4">開關控制</a>
             </li>
-
-            <div id='exit'>
-                <button class="btn-outline-danger btn" type="button" name="button">
-                    離開
-                </button>
-            </div>
         </ul>
+    </div>
+    <div id="btn-exlo" >
+        <button id='exit' class="btn-outline-info btn" type="button" name="button">
+            離開
+        </button>
+        <button id='logout' class="btn-outline-danger btn" type="button" name="button">
+            登出
+        </button>
     </div>
     <div id="status" class="main_frame">
         <table id="surronding_table" class="table text-center table-bordered">
@@ -166,6 +177,24 @@ function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl)
         <img src="../img/img2.jpg" alt="">
     </div>
     <div id="commodity" class="main_frame">
+        <table id="goods" class=" table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>照片</th>
+                    <th>資訊</th>
+                    <th>照片</th>
+                    <th>資訊</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> <img src="../../img/img1.jpg" alt=""> </td>
+                    <td>資訊1</td>
+                    <td> <img src="../../img/img2.jpg" alt=""> </td>
+                    <td>資訊2</td>
+                </tr>
+            </tbody>
+        </table>
         <img src="../img/png2.png" alt="">
     </div>
     <div id="device" class="main_frame">
