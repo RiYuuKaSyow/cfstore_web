@@ -7,10 +7,10 @@
     <title>無人商店</title>
 </head>
 <body style="background-color:#00a0e3;">
-        <a href="../web/boss.php?select=1" style="position:relative; top:20% ;left:10%">
+        <a href="web/boss.php?select=1" style="position:relative; top:20% ;left:10%">
             <img src="boss.png" style="size:20%;" alt="">
         </a>
-        <a href="../web/shop.php" style="position:relative; top:20%; left:30%;">
+        <a href="web/shop.php" style="position:relative; top:20%; left:30%;">
             <img src="shop.png" style="size:50%;" alt="">
         </a>
 

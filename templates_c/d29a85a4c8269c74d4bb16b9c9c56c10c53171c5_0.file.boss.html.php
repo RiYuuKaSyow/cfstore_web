@@ -1,4 +1,27 @@
-<!DOCTYPE html>
+<?php
+/* Smarty version 3.1.32, created on 2019-02-05 09:54:06
+  from 'E:\xampp\htdocs\admin\html\boss.html' */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.32',
+  'unifunc' => 'content_5c594f2eeeee96_82593744',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    'd29a85a4c8269c74d4bb16b9c9c56c10c53171c5' => 
+    array (
+      0 => 'E:\\xampp\\htdocs\\admin\\html\\boss.html',
+      1 => 1549356845,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+  ),
+),false)) {
+function content_5c594f2eeeee96_82593744 (Smarty_Internal_Template $_smarty_tpl) {
+?><!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta http-equiv="UserContent-Type" content="text/html; charset=utf-8" />
@@ -8,11 +31,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/web.css">
     <link rel="stylesheet" href="../css/test.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js" ></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <?php echo '<script'; ?>
+ src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js" ><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"><?php echo '</script'; ?>
+>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -49,22 +82,28 @@
             display: none;
         }
     </style>
-    <script type="text/javascript">
+    <?php echo '<script'; ?>
+ type="text/javascript">
         $(function(){
-            if( {$select} == 1 ){
+            if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 1 ){
                 $("#status").toggle();
-            }else if ( {$select} == 2 ) {
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 2 ) {
                 $("#record").show();
-            }else if ( {$select} == 3 ) {
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 3 ) {
                 $("#commodity").show();
-            }else if ( {$select} == 4 ) {
+            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 4 ) {
                 $("#device").show();
             };
             $("#exit").click(function(){
                 window.location.href = '../index.php' ;
             });
         });
-    </script>
+    <?php echo '</script'; ?>
+>
 </head>
 <body>
     <div id="option" >
@@ -134,3 +173,5 @@
     </div>
 </body>
 </html>
+<?php }
+}
