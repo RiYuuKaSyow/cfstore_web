@@ -1,6 +1,6 @@
 <?php
-    require("../php/set.php") ;
-    include("../php/function.php") ;
+    require("../../php/set.php") ;
+    include("../../php/function.php") ;
     if( isset( $_GET['select'] ) ){
         $_SESSION['$select'] = $_GET['select'] ;
     }else{
