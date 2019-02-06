@@ -8,5 +8,5 @@
     }
 
     $smarty->assign("select" , $_SESSION['$select']) ;
-    $smarty->display("../html/boss.html") ;
+    $smarty->display("../html/host.html") ;
 ?>
