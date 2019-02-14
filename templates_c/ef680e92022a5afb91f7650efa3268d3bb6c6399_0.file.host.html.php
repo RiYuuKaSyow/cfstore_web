@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-06 15:40:33
+/* Smarty version 3.1.32, created on 2019-02-14 10:31:45
   from 'E:\xampp\htdocs\admin\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c5af1e158d327_32024192',
+  'unifunc' => 'content_5c6535814e2213_59141327',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ef680e92022a5afb91f7650efa3268d3bb6c6399' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\host.html',
-      1 => 1549464029,
+      1 => 1550136704,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c5af1e158d327_32024192 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -71,7 +71,9 @@ function content_5c5af1e158d327_32024192 (Smarty_Internal_Template $_smarty_tpl)
             left:2% ;
             width:20% ;
         }
-
+        td{
+            line-height: 650% ;
+        }
         #goods img{
             max-width:150px ;
             max-height:150px ;
@@ -103,13 +105,34 @@ function content_5c5af1e158d327_32024192 (Smarty_Internal_Template $_smarty_tpl)
                 $("#device").show();
             };
             $("#exit").click(function(){
-                window.location.href = '../index.php' ;
+                window.location.href = '../../index.php' ;
             });
             $("#logout").click(function(){
                 if( confirm("確定要登出嗎") ){
                     window.location.href = '../../C8763/web/' ;
                 };
             });
+            function goods_show(){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../../php/function.php' ,
+                    data : { action : 'host_goods_show' } ,
+                    success : function(data){
+                        $("#good_show").html(data) ;
+                    }
+                })
+            };
+            function turnlight(){
+                $.ajax({
+                    method:'POST' ,
+                    url:'../../php/function.php' ,
+                    data: { action:'turnlight' , light:$("#light").val()  } ,
+                    success: function( response ){
+                        $("#hi").html( response ) ;
+                    }
+                })
+            };
+            goods_show() ;
         });
     <?php echo '</script'; ?>
 >
@@ -190,31 +213,32 @@ function content_5c5af1e158d327_32024192 (Smarty_Internal_Template $_smarty_tpl)
                 </tr>
             </tbody>
         </table>
-        <img src="../../img/img1.jpg" width="400" height="400" alt="">
     </div>
     <div id="commodity" class="main_frame">
         <table id="goods" class=" table table-bordered text-center">
             <thead>
                 <tr>
                     <th>照片</th>
-                    <th>資訊</th>
+                    <th>價格</th>
+                    <th>庫存</th>
                     <th>照片</th>
-                    <th>資訊</th>
+                    <th>價格</th>
+                    <th>庫存</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td> <img src="../../img/img1.jpg" alt=""> </td>
-                    <td>資訊1</td>
-                    <td> <img src="../../img/img2.jpg" alt=""> </td>
-                    <td>資訊2</td>
-                </tr>
+            <tbody id="good_show">
             </tbody>
         </table>
-        <img src="../../img/png2.png" alt="">
     </div>
     <div id="device" class="main_frame">
-        <img src="../../img/pistar.jpg" alt="">
+        <div id="hi" class="">
+
+        </div>
+        <select id="light" class="" name="">
+            <option value="1">開燈</option>
+            <option value="0">關燈</option>
+        </select>
+        <button onclick="turnlight()" type="button" name="button">開關</button>
     </div>
 </body>
 </html>

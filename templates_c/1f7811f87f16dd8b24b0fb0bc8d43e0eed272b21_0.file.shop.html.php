@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-05 11:48:10
+/* Smarty version 3.1.32, created on 2019-02-14 10:10:59
   from 'E:\xampp\htdocs\admin\html\shop.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c5969ea805517_55924693',
+  'unifunc' => 'content_5c6530a32a3796_26055980',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '1f7811f87f16dd8b24b0fb0bc8d43e0eed272b21' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\shop.html',
-      1 => 1549363689,
+      1 => 1550135458,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c5969ea805517_55924693 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c6530a32a3796_26055980 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -61,50 +61,32 @@ function content_5c5969ea805517_55924693 (Smarty_Internal_Template $_smarty_tpl)
             left:5% ;
         }
         #cam{
-            width:45% ;
-            height:100% ;
+            width:80% ;
+            height:85% ;
             position:relative ;
-            left:15% ;
-            top:5% ;
-            border:2px #000000 solid;
+            left:12% ;
+            top:3% ;
+            border:2px #cccccc solid;
         }
         #number{
-            height:10% ;
+            height:70px ;
+            line-height:275%;
+        }
+        .t2{
+            top:3% ;
             position:relative ;
-            top:5% ;
-            border:2px #000000 solid;
+            width:20% ;
+            height: 81% ;
+            left:14% ;
+            text-align:center;
+        }
+        .t3{
+            width: 100% ;
+            position:relative ;
+            left:13%;
         }
         #status{
-            height:10% ;
-            position:relative ;
-            top:5% ;
-            border:2px #000000 solid;
-        }
-        #goods{
-            height:90% ;
-            position:relative ;
-            top:5% ;
-            border:2px #000000 solid;
-        }
-        #customer{
-            height:90% ;
-            position:relative ;
-            top:5% ;
-            border:2px #000000 solid;
-        }
-        #b2{
-            line-height:275%;
-            position:relative ;
-            width:45% ;
-            left:15% ;
-            text-align:center;
-        }
-        #b3{
-            line-height:275%;
-            position:relative ;
-            width:10% ;
-            left:15% ;
-            text-align:center;
+            width:10%;
         }
     </style>
     <?php echo '<script'; ?>
@@ -115,14 +97,36 @@ function content_5c5969ea805517_55924693 (Smarty_Internal_Template $_smarty_tpl)
                 $i++ ;
                 $.ajax({
                     method:'POST' ,
-                    data: { action:'test' , i:$i  } ,
-                    url:'../../php/function.php' ,
-                    success: function( response ){
-                        $("#cam").html('<img src="../../img/img' + response + '.jpg" alt="">') ;
+                    dateType : 'json' ,
+                    url:'../../php/test.py' ,
+                    success: function( data ){
+                        $("#cam").html( data ) ;
                     }
                 })
             };
-            setInterval(test,1000) ;
+            function numberf(){
+                $.ajax({
+                    method : 'POST' ,
+                    data : { action:'number' } ,
+                    url : '../../php/function.php' ,
+                    success : function( response ){
+                        $("#number").html( response ) ;
+                    }
+                })
+            };
+            function goodsf(){
+                $.ajax({
+                    method : 'POST' ,
+                    data : { action:'goods' } ,
+                    url : '../../php/function.php' ,
+                    success : function( response ){
+                        $("#goods").html( response ) ;
+                    }
+                })
+            }
+            setInterval(numberf,30) ;
+            //setInterval(test,500) ;
+            //$("#cam").load("") ;
         });
     <?php echo '</script'; ?>
 >
@@ -132,23 +136,26 @@ function content_5c5969ea805517_55924693 (Smarty_Internal_Template $_smarty_tpl)
         <div id="cam" >
             hi
         </div>
-
-        <div id="b2">
-            <div id="number">
-                87號櫃台處理中
-            </div>
-            <div id="goods">
-                34
-            </div>
-        </div>
-        <div id="b3">
-            <div id="status">
-                處理中
-            </div>
-            <div id="customer">
-                78
-            </div>
-        </div>
+        <table class="table table-bordered t2">
+            <thead  class=" thead-light ">
+                <tr>
+                    <th id="number" ></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="goods" >456</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered t3">
+            <thead class="thead-light">
+                <tr>
+                    <th id="status">處理中</th>
+                    <td id="customer">123</td>
+                </tr>
+            </thead>
+        </table>
 
     </div>
 
