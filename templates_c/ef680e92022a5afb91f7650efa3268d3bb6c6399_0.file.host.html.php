@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-14 10:31:45
+/* Smarty version 3.1.32, created on 2019-02-17 07:14:23
   from 'E:\xampp\htdocs\admin\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c6535814e2213_59141327',
+  'unifunc' => 'content_5c68fbbf401b70_17193437',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ef680e92022a5afb91f7650efa3268d3bb6c6399' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\host.html',
-      1 => 1550136704,
+      1 => 1550384056,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -87,18 +87,23 @@ function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl)
             display: none;
             margin-top: 1% ;
         }
+
     </style>
+
     <?php echo '<script'; ?>
  type="text/javascript">
         $(function(){
             if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 1 ){
+                setInterval( status_show , 200 ) ;
                 $("#status").toggle();
             }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 2 ) {
+                record_show() ;
                 $("#record").show();
             }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 3 ) {
+                goods_show() ;
                 $("#commodity").show();
             }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 4 ) {
@@ -112,6 +117,60 @@ function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl)
                     window.location.href = '../../C8763/web/' ;
                 };
             });
+            $("#customer_search").keyup(function(){
+                customer_searchf( $("#customer_search").val() , '10000-01-01 00:00:00' , '9998-12-31 23:59:59' ) ;
+            });
+            $("#date_button").click(function(){
+                customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+            });
+            $("#commodity_search").keyup(function(){
+                goods_search( $("#commodity_search").val() ) ;
+            });
+            var $r_order = 0 ;
+            $("#remainder_order").click(function(){
+                if( $r_order ){
+                    $("#remainder_order_resulte").html("升序(由少到多)");
+                    $.ajax({
+                        method : 'POST' ,
+                        url : '../../php/function.php' ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : '' } ,
+                        success : function( data ){
+                            $("#good_show").html( data ) ;
+                        }
+                    })
+                }else{
+                    $("#remainder_order_resulte").html("降序(由多到少)");
+                    $.ajax({
+                        method : 'POST' ,
+                        url : '../../php/function.php' ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : 'desc' } ,
+                        success : function( data ){
+                            $("#good_show").html( data ) ;
+                        }
+                    })
+                };
+                $r_order = ($r_order + 1) %2 ;
+            });
+            function status_show(){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../../php/function.php' ,
+                    data : { action : 'status_show' } ,
+                    success : function( data ){
+                        $("#surroding_table").html( data ) ;
+                    }
+                })
+            };
+            function record_show(){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../../php/function.php' ,
+                    data : { action : 'record_show' } ,
+                    success : function( record ){
+                        $("#record_tbody").html( record ) ;
+                    }
+                })
+            };
             function goods_show(){
                 $.ajax({
                     method : 'POST' ,
@@ -132,7 +191,26 @@ function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl)
                     }
                 })
             };
-            goods_show() ;
+            function customer_searchf( $keyword , $time_start , $time_end ){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../../php/function.php' ,
+                    data : { action : 'record_search' , keyword : $keyword , time_start : $time_start , time_end : $time_end  } ,
+                    success : function( record ){
+                        $("#record_tbody").html( record ) ;
+                    }
+                })
+            }
+            function goods_search( $keyword ){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../../php/function.php' ,
+                    data : { action:'commodity_search' , keyword:$keyword , orderby:'' } ,
+                    success : function( search ){
+                        $("#good_show").html( search ) ;
+                    }
+                })
+            }
         });
     <?php echo '</script'; ?>
 >
@@ -163,24 +241,8 @@ function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl)
         </button>
     </div>
     <div id="status" class="main_frame">
-        <table id="surronding_table" class="table text-center table-bordered">
-            <thead class= " thead-light ">
-                <tr>
-                    <th>溫度</th>
-                    <th>濕度</th>
-                    <th>火焰</th>
-                    <th>在店人數</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>no</td>
-                    <td>123</td>
-                </tr>
-            </tbody>
-        </table>
+        <div id="surroding_table">
+        </div>
         <table id="customer_table" class="table text-center table-bordered">
             <thead class=" thead-light ">
                 <tr>
@@ -197,30 +259,54 @@ function content_5c6535814e2213_59141327 (Smarty_Internal_Template $_smarty_tpl)
         </table>
     </div>
     <div id="record" class="main_frame">
-        <table class="table table-bordered text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-xs-4">
+                    查詢: <input id="customer_search" type="text" name="" value="" placeholder="輸入消費者">
+                </div>
+                <div class="col-sm-8 col-xs-8">
+                    從<input id="time_start" type="date" name="" value="">
+                    至 <input id="time_end" type="date" name="" value="">
+                    <button id="date_button" type="button" name="button" class=" btn btn-outline-info">查詢</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <table class=" col-sm-12 col-xs-12 table-sm table-bordered text-center table-hover">
             <thead>
                 <tr>
-                    <th>時間</th>
+                    <th>日期</th>
                     <th>消費者</th>
-                    <th class="col">購買物品</th>
+                    <th>紀錄編號</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>2019/02/06</td>
-                    <td>customer1</td>
-                    <td>drinks*2 </td>
-                </tr>
+            <tbody id="record_tbody">
             </tbody>
         </table>
     </div>
     <div id="commodity" class="main_frame">
+        <div class=" container ">
+            <div class=" row ">
+                <div class=" col-sm-6 col-xs-6">
+                    查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">
+                </div>
+                <div class=" col-sm-3 col-xs-3">
+                    <a id="remainder_order" href="#" >依庫存排序</a>
+                </div>
+                <div class=" col-sm-3 col-xs-3 ">
+                    <h6 id="remainder_order_resulte"></h6>
+                </div>
+            </div>
+        </div>
+        <br>
         <table id="goods" class=" table table-bordered text-center">
-            <thead>
+            <thead class="thead-light" >
                 <tr>
+                    <th>商品</th>
                     <th>照片</th>
                     <th>價格</th>
                     <th>庫存</th>
+                    <th>商品</th>
                     <th>照片</th>
                     <th>價格</th>
                     <th>庫存</th>

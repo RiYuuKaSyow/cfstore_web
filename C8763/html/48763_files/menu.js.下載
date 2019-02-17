@@ -1,0 +1,118 @@
+
+
+(function ($) {
+
+    var chk = false;
+    $.fn.menumaker = function (options) {
+        var cssmenu = $(this), settings = $.extend({
+            format: "dropdown",
+            sticky: false
+        }, options);
+        return this.each(function () {
+            $(this).find("a#menu-btn").on('click', function () {
+                $(this).toggleClass('menu-opened');
+                var mainmenu = $(this).siblings('ul.u-menu');
+                if (mainmenu.hasClass('open')) {
+                    mainmenu.slideToggle().removeClass('open');
+                }
+                else {
+                    mainmenu.slideToggle().addClass('open');
+                    if (settings.format === "dropdown") {
+                        // mainmenu.find('li ul.m-navitem-subitem').show();
+                        mainmenu.find('li ul.m-navitem-subitem').show();
+                    }
+                }
+                if (chk == false) {
+                    $(".g-nav").attr("style", "position:absolute");
+                    $(".g-main").attr("style", "position:fixed");
+                    $(".m-topbar").attr("style", "position:absolute");
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        $(".u-searchbtn").attr("style", "position: fixed;top: 19px;left: 73px;");
+                    }
+                    else {
+                        $(".u-searchbtn").attr("style", "position: fixed;top: 19px;left: 73px;");
+                    }
+                    chk = true;
+                    return;
+                }
+                if (chk == true) {
+                    $(".g-nav").attr("style", "position:fixed");
+                    $(".g-main").attr("style", "position:relative");
+                    $(".m-topbar").attr("style", "position:fixed");
+                    $(".u-searchbtn").attr("style", "position: fixed;top: 19px;left: 73px;");
+                    chk = false;
+                    return;
+                }
+            });
+
+            var index = 0;
+            cssmenu.find('li ul.m-navitem-subitem').parent().parent().parent().addClass('has-sub');
+            multiTg = function () {
+                cssmenu.find(".has-sub").prepend('<span class="submenu-button"></span>');
+                cssmenu.find('.submenu-button').on('click', function () {
+                    // 點同一個的情況
+                    if ($(this).siblings('.m-subitem-wrapper ').hasClass('open')) {
+                        if ($(this).hasClass('submenu-button submenu-opened')) {
+                            $(this).siblings('.m-subitem-wrapper').removeClass('open').slideToggle();
+                            $(this).attr('class','submenu-button');
+                            return;
+                        }
+                    }
+                    //點其他的情況
+                    $("span.submenu-button.submenu-opened").attr("class", "submenu-button");
+                    $("div.m-subitem-wrapper.open").attr("class", "m-subitem-wrapper");
+                    $(this).toggleClass('submenu-opened');
+                    if ($(this).siblings('.m-subitem-wrapper ').hasClass('m-subitem-wrapper')) {
+                        $('.m-subitem-wrapper').attr("style", "display:none;");
+                        $(".m-navitem-subitem").attr("style", "display:block;");
+                    }
+                    if ($(this).siblings('.m-subitem-wrapper ').hasClass('open')) {
+                        $(this).siblings('.m-subitem-wrapper').removeClass('open').slideToggle();
+
+                        $('.m-subitem-wrapper').attr("style", "display:none;");
+                        $(".m-navitem-subitem").removeClass('open').slideToggle();
+                        $(this).attr("class", "submenu-button");
+                    }
+
+                    else {
+                        $(this).siblings('.m-subitem-wrapper').addClass('open').slideToggle();
+                    }
+                    
+            });
+            };
+
+            if (settings.format === 'multitoggle') multiTg();
+            else cssmenu.addClass('dropdown');
+
+            if (settings.sticky === true) cssmenu.css('position', 'fixed');
+            resizeFix = function () {
+                //var mediasize = 850;
+                //if ($(window).width() > mediasize) {
+                //    cssmenu.find('ul').show();
+                //}
+                //cssmenu.find('ul').show();
+                //if ($(window).width() <= mediasize) {
+                //    cssmenu.find('ul').hide().removeClass('open');
+                //}
+            };
+            resizeFix();
+            return $(window).on('resize', resizeFix);
+
+        });
+
+
+
+    };
+})(jQuery);
+
+(function ($) {
+    $(document).ready(function () {
+        $("#nav").menumaker({
+            format: "multitoggle"
+
+        });
+
+    });
+
+
+})(jQuery);

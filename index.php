@@ -1,3 +1,3 @@
 <?php
-    header('refresh:0 ; url="C8763/web/4.php"');
+    header('refresh:0 ; url="C8763/html/48763.html"');
 ?>
