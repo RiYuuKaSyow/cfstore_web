@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-02-17 07:14:23
+/* Smarty version 3.1.32, created on 2019-02-27 13:17:28
   from 'E:\xampp\htdocs\admin\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c68fbbf401b70_17193437',
+  'unifunc' => 'content_5c767fd857d4c5_81363485',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'ef680e92022a5afb91f7650efa3268d3bb6c6399' => 
     array (
       0 => 'E:\\xampp\\htdocs\\admin\\html\\host.html',
-      1 => 1550384056,
+      1 => 1551269797,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c767fd857d4c5_81363485 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -118,7 +118,11 @@ function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl)
                 };
             });
             $("#customer_search").keyup(function(){
-                customer_searchf( $("#customer_search").val() , '10000-01-01 00:00:00' , '9998-12-31 23:59:59' ) ;
+                if( $("#time_start").val()!='' || $("#time_end").val()!='' ){
+                    customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+                }else{
+                    customer_searchf( $("#customer_search").val() , '10000-01-01 00:00:00' , '9998-12-31 23:59:59' ) ;
+                };
             });
             $("#date_button").click(function(){
                 customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
@@ -181,7 +185,7 @@ function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl)
                     }
                 })
             };
-            function turnlight(){
+            $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
                     url:'../../php/function.php' ,
@@ -190,7 +194,7 @@ function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl)
                         $("#hi").html( response ) ;
                     }
                 })
-            };
+            });
             function customer_searchf( $keyword , $time_start , $time_end ){
                 $.ajax({
                     method : 'POST' ,
@@ -321,10 +325,10 @@ function content_5c68fbbf401b70_17193437 (Smarty_Internal_Template $_smarty_tpl)
 
         </div>
         <select id="light" class="" name="">
-            <option value="1">開燈</option>
-            <option value="0">關燈</option>
+            <option value=1>開燈</option>
+            <option value=0>關燈</option>
         </select>
-        <button onclick="turnlight()" type="button" name="button">開關</button>
+        <button id="turnlight" type="button" name="button">開關</button>
     </div>
 </body>
 </html>

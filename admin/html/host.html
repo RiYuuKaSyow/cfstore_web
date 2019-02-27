@@ -147,7 +147,7 @@
                     }
                 })
             };
-            function turnlight(){
+            $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
                     url:'../../php/function.php' ,
@@ -156,7 +156,7 @@
                         $("#hi").html( response ) ;
                     }
                 })
-            };
+            });
             function customer_searchf( $keyword , $time_start , $time_end ){
                 $.ajax({
                     method : 'POST' ,
@@ -286,10 +286,10 @@
 
         </div>
         <select id="light" class="" name="">
-            <option value="1">開燈</option>
-            <option value="0">關燈</option>
+            <option value=1>開燈</option>
+            <option value=0>關燈</option>
         </select>
-        <button onclick="turnlight()" type="button" name="button">開關</button>
+        <button id="turnlight" type="button" name="button">開關</button>
     </div>
 </body>
 </html>
