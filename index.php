@@ -1,3 +1,3 @@
 <?php
-    header('refresh:0 ; url="C8763/html/48763.html"');
+    header('refresh:0 ; url="npstore/web/index.php"');
 ?>
