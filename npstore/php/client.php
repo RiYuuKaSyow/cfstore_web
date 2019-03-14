@@ -1,19 +1,19 @@
 <?php
     if( isset($_GET['action'])  ){
 
-        $client_array = array( 'location'=>'http://120.101.8.8/nopeoplestore/php/server.php' , 'uri'=>'48763' ) ;
-        //$client_array = array( 'location'=>'http://127.0.0.1/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://120.101.8.8/nopeoplestore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
         $action = $_GET['action'] ;
         switch($action) {
             
             case 'test' :{
-                echo $client->test($_GET['i']) ;
+                echo $client->test() ;
                 break ;
             }
             case 'turnlight': {
-                 echo $client->turnlight( $_GET['light'] ) ;
+                 echo $client->turnlight(1) ;
                  break ;
             }
             case 'number': {

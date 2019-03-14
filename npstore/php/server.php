@@ -1,21 +1,26 @@
 <?php
-    $dbt = 'mysql' ;
-    $host = 'localhost' ;
-    $dbname = 'store' ;
-    $user = 'root' ;
-    $pwd = 'admin' ;
-    $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
-    $mysql = new PDO( $dbn , $user , $pwd ) ;
     class testA {
-        public function test($i){
-            return $i ;
+        
+        private $dbt = 'mysql' ;
+        private $host = 'localhost' ;
+        private $dbname = 'store' ;
+        private $user = 'root' ;
+        private $pwd = 'admin' ;
+        private $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
+        public $mysql ;
+        
+        public function _construct( $dbn , $user , $pwd ){
+            $this->mysql = new PDO( $dbn , $user , $pwd ) ;
+        }
+        
+        public function test(){
+            return 'test success' ;
         }
         public function turnlight($light){   
-            $cmd = 'py ../python/test.py' ;
-            return exec($cmd) ;          
+            return $light ;          
         }
         public function number(){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $shop = $mysql->query('select shop from status') ;
             foreach($shop as $store){
                 if( $store['shop'] ){
@@ -27,7 +32,7 @@
             }
         }
         public function host_goods_show(){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $commodity = $mysql->query("select * from commodity_data") ;
             $i = 0 ;
             $str = "" ;
@@ -48,7 +53,7 @@
             return $str ;
         }
         public function status_show(){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $str = "" ;
             $status = $mysql->query('select * from status') ;
             foreach ( $status as $status ) {
@@ -80,7 +85,7 @@
             return $str ;
         }
         public function record_show(){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $record = $mysql->query('select * from record ') ;
             $str ="" ;
             foreach( $record as $record ){
@@ -93,11 +98,11 @@
             return $str ;
         }
         public function ord_show(){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $ord = $mysql->query('select * from ord') ;
         }
         public function commodity_search($keyword , $orderby){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\' order by remainder ' . $orderby ) ;
             $str = "" ;
             $i = 0 ;
@@ -118,7 +123,7 @@
             return $str ;
         }
         public function record_search($keyword , $time_start , $time_end ){
-            global $mysql ;
+            $mysql = $this->mysql ;
             $str ="" ;
             $date_end = new DateTime($time_end) ;
             $date_end->modify('+1 day') ;
@@ -133,11 +138,9 @@
             }
             return $str ;
         }
-        function add(){
-            return "HI" ;
-        }
     }
 
     $server = new SoapServer( null , array( 'uri'=>'48763' ) ) ;
+    //$server = new SoapServer(null) ;
     $server->setClass('testA') ;
     $server->handle() ;

@@ -27,18 +27,26 @@
             text-decoration:none;
         }
     </style>
+    <script type="text/javascript">
+        $(function(){
+            if( {$login} ){
+                $("#logrow").hide() ;
+                $("#member_link").show() ;    
+            };
+        });
+    </script>
 </head>
 <body>
     <div class=" container ">
-        <div id="logrow" class="row">
-            <div class="col-sm col-xs">
-                帳號:<input type="text" name="" value="" class="float-right">
+        <div class="row">
+            <div class="col-sm-3 col-xs-3">
+                NP!store 無人商店
             </div>
-            <div class="col-sm col-xs">
-                密碼:<input type="password" name="" class="float-right" value="">
-            </div>
-            <div class="col-sm col-xs">
-                <button type="button" name="button" class="float-right btn btn-outline-warning ">登入</button>
+            <div id="logrow" class="col-sm col-xs">
+                <input type="text" name="" value="" class="" placeholder="帳號" >
+                <input type="password" name="" class="" value="" placeholder="密碼">
+                <input type="checkbox" name="" value=""><span style="font-size:1; color:#777">商家帳號</span>
+                <button type="button" name="button" class="float-right btn btn-sm btn-outline-warning ">登入</button>
             </div>
         </div>
         <div class="container bg-warning">
@@ -59,15 +67,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a id="member_link" href="../web/host.php" style="visibility:hidden;">
                             會員帳號
                         </a>
                     </li>
                 </ul>
             
         </div>
-        <div class="">
-            
+        <div id="main_frame" class="">
+            nothing now <br>
+            comming soon
         </div>
     </div>
 </body>

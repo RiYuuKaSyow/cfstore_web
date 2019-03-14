@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-09 16:33:38
+/* Smarty version 3.1.32, created on 2019-03-12 15:00:54
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c83dcd24482e4_55742876',
+  'unifunc' => 'content_5c87bb967cca71_80691269',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1552145617,
+      1 => 1552399253,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c83dcd24482e4_55742876 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c87bb967cca71_80691269 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -60,18 +60,29 @@ function content_5c83dcd24482e4_55742876 (Smarty_Internal_Template $_smarty_tpl)
             text-decoration:none;
         }
     </style>
+    <?php echo '<script'; ?>
+ type="text/javascript">
+        $(function(){
+            if( <?php echo $_smarty_tpl->tpl_vars['login']->value;?>
+ ){
+                $("#logrow").hide() ;
+                $("#member_link").show() ;    
+            };
+        });
+    <?php echo '</script'; ?>
+>
 </head>
 <body>
     <div class=" container ">
-        <div id="logrow" class="row">
-            <div class="col-sm col-xs">
-                帳號:<input type="text" name="" value="" class="float-right">
+        <div class="row">
+            <div class="col-sm-3 col-xs-3">
+                NP!store 無人商店
             </div>
-            <div class="col-sm col-xs">
-                密碼:<input type="password" name="" class="float-right" value="">
-            </div>
-            <div class="col-sm col-xs">
-                <button type="button" name="button" class="float-right btn btn-outline-warning ">登入</button>
+            <div id="logrow" class="col-sm col-xs">
+                <input type="text" name="" value="" class="" placeholder="帳號" >
+                <input type="password" name="" class="" value="" placeholder="密碼">
+                <input type="checkbox" name="" value=""><span style="font-size:1; color:#777">商家帳號</span>
+                <button type="button" name="button" class="float-right btn btn-sm btn-outline-warning ">登入</button>
             </div>
         </div>
         <div class="container bg-warning">
@@ -92,15 +103,16 @@ function content_5c83dcd24482e4_55742876 (Smarty_Internal_Template $_smarty_tpl)
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a id="member_link" href="../web/host.php" style="visibility:hidden;">
                             會員帳號
                         </a>
                     </li>
                 </ul>
             
         </div>
-        <div class="">
-            
+        <div id="main_frame" class="">
+            nothing now <br>
+            comming soon
         </div>
     </div>
 </body>
