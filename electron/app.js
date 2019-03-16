@@ -6,13 +6,14 @@ let mainwindow ;
 
 function createwindow(){
     mainwindow = new browser({
-        width : 800 ,
-        height : 600 ,
+        resizable:false ,
+        title:'無人商店結帳系統' ,
+        icon:'png1.png'
     });
     
     mainwindow.loadFile('shop.html') ;
-    mainwindow.webContents.openDevTools() ;
-    
+    //mainwindow.webContents.openDevTools() ;
+    mainwindow.setFullScreen(true) ;
     mainwindow.on('closed',function(){
         mainwindow = null ;
     }) ;

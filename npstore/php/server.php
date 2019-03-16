@@ -1,17 +1,11 @@
 <?php
+
+    $user = 'root' ;
+    $pwd = 'admin' ;
+    $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
+    $mysql = new PDO( $dbn , $user , $pwd ) ;
+    
     class testA {
-        
-        private $dbt = 'mysql' ;
-        private $host = 'localhost' ;
-        private $dbname = 'store' ;
-        private $user = 'root' ;
-        private $pwd = 'admin' ;
-        private $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
-        public $mysql ;
-        
-        public function _construct( $dbn , $user , $pwd ){
-            $this->mysql = new PDO( $dbn , $user , $pwd ) ;
-        }
         
         public function test(){
             return 'test success' ;
@@ -20,7 +14,7 @@
             return $light ;          
         }
         public function number(){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $shop = $mysql->query('select shop from status') ;
             foreach($shop as $store){
                 if( $store['shop'] ){
@@ -32,7 +26,7 @@
             }
         }
         public function host_goods_show(){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $commodity = $mysql->query("select * from commodity_data") ;
             $i = 0 ;
             $str = "" ;
@@ -53,7 +47,7 @@
             return $str ;
         }
         public function status_show(){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $str = "" ;
             $status = $mysql->query('select * from status') ;
             foreach ( $status as $status ) {
@@ -85,7 +79,7 @@
             return $str ;
         }
         public function record_show(){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $record = $mysql->query('select * from record ') ;
             $str ="" ;
             foreach( $record as $record ){
@@ -98,11 +92,11 @@
             return $str ;
         }
         public function ord_show(){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $ord = $mysql->query('select * from ord') ;
         }
         public function commodity_search($keyword , $orderby){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\' order by remainder ' . $orderby ) ;
             $str = "" ;
             $i = 0 ;
@@ -123,7 +117,7 @@
             return $str ;
         }
         public function record_search($keyword , $time_start , $time_end ){
-            $mysql = $this->mysql ;
+            global $mysql ;
             $str ="" ;
             $date_end = new DateTime($time_end) ;
             $date_end->modify('+1 day') ;
@@ -137,6 +131,27 @@
                     </tr>' ;
             }
             return $str ;
+        }
+        public function log( $who , $acc , $pwd ){
+            global $mysql ;
+            $str = "" ;
+            if( $who == 'host' ){
+                $user = $mysql->query('select * from shop where host ='. $acc ) ;
+                foreach ($user as $user ) {
+                    if( md5($pwd) == $user['pwd'] ){
+                        return $user['shop_id'] ;
+                    }
+                }
+                return 0 ;
+            }else if( $who == 'user' ){
+                $user = $mysql->query('select * from user where user ='. $acc ) ;
+                foreach ($user as $user ) {
+                    if( md5($pwd) == $user['pwd'] ){
+                        return 1 ;
+                    }
+                }
+                return 0 ;
+            }
         }
     }
 

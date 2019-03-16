@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-12 15:00:54
+/* Smarty version 3.1.32, created on 2019-03-16 15:56:11
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c87bb967cca71_80691269',
+  'unifunc' => 'content_5c8d0e8b8e5894_38345599',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1552399253,
+      1 => 1552748160,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c87bb967cca71_80691269 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c8d0e8b8e5894_38345599 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -63,11 +63,16 @@ function content_5c87bb967cca71_80691269 (Smarty_Internal_Template $_smarty_tpl)
     <?php echo '<script'; ?>
  type="text/javascript">
         $(function(){
+                        
             if( <?php echo $_smarty_tpl->tpl_vars['login']->value;?>
  ){
-                $("#logrow").hide() ;
-                $("#member_link").show() ;    
-            };
+                $("#log_frame").hide() ;
+                $("#member_link").show() ;  
+                $("#log_out").show();
+            };      
+            $("#log_out").click(function(){
+                window.location.href = '../web/index.php?log=0' ;
+            });
         });
     <?php echo '</script'; ?>
 >
@@ -79,10 +84,10 @@ function content_5c87bb967cca71_80691269 (Smarty_Internal_Template $_smarty_tpl)
                 NP!store 無人商店
             </div>
             <div id="logrow" class="col-sm col-xs">
-                <input type="text" name="" value="" class="" placeholder="帳號" >
-                <input type="password" name="" class="" value="" placeholder="密碼">
-                <input type="checkbox" name="" value=""><span style="font-size:1; color:#777">商家帳號</span>
-                <button type="button" name="button" class="float-right btn btn-sm btn-outline-warning ">登入</button>
+                <form id="log_frame" class="" action="../web/login.php" method="post">
+                    <button type="submit" id="log_btn" class="float-right btn btn-sm btn-outline-warning ">登入</button>
+                </form>
+                <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
         <div class="container bg-warning">
@@ -103,7 +108,7 @@ function content_5c87bb967cca71_80691269 (Smarty_Internal_Template $_smarty_tpl)
                         </a>
                     </li>
                     <li>
-                        <a id="member_link" href="../web/host.php" style="visibility:hidden;">
+                        <a id="member_link" href="../web/host.php" style="display:none;">
                             會員帳號
                         </a>
                     </li>

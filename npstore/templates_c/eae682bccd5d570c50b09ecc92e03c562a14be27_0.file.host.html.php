@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-09 13:23:11
+/* Smarty version 3.1.32, created on 2019-03-16 16:02:05
   from 'E:\xampp\htdocs\npstore\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c83b02f20b5e2_02905582',
+  'unifunc' => 'content_5c8d0fed18ca67_81450853',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eae682bccd5d570c50b09ecc92e03c562a14be27' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\host.html',
-      1 => 1552134190,
+      1 => 1552748523,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c83b02f20b5e2_02905582 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -94,11 +94,6 @@ function content_5c83b02f20b5e2_02905582 (Smarty_Internal_Template $_smarty_tpl)
         $(function(){
             if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 1 ){
-                /*
-                if( <?php echo $_smarty_tpl->tpl_vars['more']->value;?>
- ){
-                     
-                };*/
                 setInterval( status_show , 200 ) ;
                 $("#status").toggle();
             }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
@@ -114,11 +109,11 @@ function content_5c83b02f20b5e2_02905582 (Smarty_Internal_Template $_smarty_tpl)
                 $("#device").show();
             };
             $("#exit").click(function(){
-                window.location.href = '../index.php' ;
+                window.location.href = '../web/index.php' ;
             });
             $("#logout").click(function(){
                 if( confirm("確定要登出嗎") ){
-                    window.location.href = '../C8763/web/' ;
+                    window.location.href = '../web/index.php?log=0' ;
                 };
             });
             $("#customer_search").keyup(function(){
@@ -192,9 +187,10 @@ function content_5c83b02f20b5e2_02905582 (Smarty_Internal_Template $_smarty_tpl)
             $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
-                    url:'../php/client.php' ,
-                    data: { action:'turnlight' , light:$("#light").val()  } ,
+                    url:'http://localhost/npstore/php/client.php' ,
+                    data: { action:'test' , light:$("#light").val()  } ,
                     success: function( response ){
+                        console.log(response) ;
                         $("#hi").html( response ) ;
                     }
                 })

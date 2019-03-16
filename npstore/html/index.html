@@ -29,10 +29,15 @@
     </style>
     <script type="text/javascript">
         $(function(){
+                        
             if( {$login} ){
-                $("#logrow").hide() ;
-                $("#member_link").show() ;    
-            };
+                $("#log_frame").hide() ;
+                $("#member_link").show() ;  
+                $("#log_out").show();
+            };      
+            $("#log_out").click(function(){
+                window.location.href = '../web/index.php?log=0' ;
+            });
         });
     </script>
 </head>
@@ -43,10 +48,10 @@
                 NP!store 無人商店
             </div>
             <div id="logrow" class="col-sm col-xs">
-                <input type="text" name="" value="" class="" placeholder="帳號" >
-                <input type="password" name="" class="" value="" placeholder="密碼">
-                <input type="checkbox" name="" value=""><span style="font-size:1; color:#777">商家帳號</span>
-                <button type="button" name="button" class="float-right btn btn-sm btn-outline-warning ">登入</button>
+                <form id="log_frame" class="" action="../web/login.php" method="post">
+                    <button type="submit" id="log_btn" class="float-right btn btn-sm btn-outline-warning ">登入</button>
+                </form>
+                <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
         <div class="container bg-warning">
@@ -67,7 +72,7 @@
                         </a>
                     </li>
                     <li>
-                        <a id="member_link" href="../web/host.php" style="visibility:hidden;">
+                        <a id="member_link" href="../web/host.php" style="display:none;">
                             會員帳號
                         </a>
                     </li>

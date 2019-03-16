@@ -14,41 +14,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>無人商店</title>
+    <title>無人商店結帳系統</title>
     <style type="text/css">
         body{
-            width: 90vw;
-            height: 90vh;
+            width: 100vw;
+            height: 100vh;
         }
         #main{
             width:100% ;
             height:100% ;
-            left:5% ;
         }
         #cam{
-            width:80% ;
+            width:75% ;
             height:85% ;
-            position:relative ;
-            left:12% ;
+            position:absolute ;
             top:3% ;
+            left: 1%;
             border:2px #cccccc solid;
         }
-        #number{
-            height:70px ;
-            line-height:275%;
-        }
         .t2{
-            top:3% ;
-            position:relative ;
-            width:20% ;
-            height: 81% ;
-            left:14% ;
+            width: 20% ;
+            top: 2% ;
+            position:absolute;
+            left: 77% ;
             text-align:center;
         }
-        .t3{
-            width: 100% ;
-            position:relative ;
-            left:13%;
+        .t0{
+            position: absolute;
+            top:80% ;
+            left:77% ;
+            width: 20%;
+            text-align:center;
         }
         #status{
             width:10%;
@@ -61,6 +57,7 @@
                 $.ajax({
                     method:'POST' ,
                     data : { action:'test' } ,
+                    //url : 'http://120.101.8.8/npstore/php/client.php'
                     url:'http://localhost/npstore/php/client.php' ,
                     success: function( data ){
                         $("#cam").html( data ) ;
@@ -83,7 +80,7 @@
                     data : { action:'goods' } ,
                     url : '../../php/function.php' ,
                     success : function( response ){
-                        $("#goods").html( response ) ;
+                        $("#com_name").html( response ) ;
                     }
                 })
             }
@@ -94,22 +91,27 @@
     </script>
 </head>
 <body>
-    <div id="main"class="container row">
+    <div id="main">
         <div id="cam" >
             
         </div>
         <table class="table table-bordered t2">
             <thead  class=" thead-light ">
                 <tr>
-                    <th id="number" ></th>
+                    <th id="number" class="col">商品</th>
+                    <th class="col">數量</th>
+                    <th class="col">價格</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td id="goods" >456</td>
+                    <td id="com_name">麥香紅茶</td>
+                    <td id="com_sum">10</td>
+                    <td id="com_price">100</td>
                 </tr>
             </tbody>
         </table>
+        <!---
         <table class="table table-bordered t3">
             <thead class="thead-light">
                 <tr>
@@ -118,7 +120,19 @@
                 </tr>
             </thead>
         </table>
-
+        --->
+        <table class="t0 table table-bordered">
+            <thead class=" thead-light ">
+                <tr>
+                    <th>總價格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>100</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

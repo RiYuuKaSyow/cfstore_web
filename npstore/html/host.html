@@ -59,10 +59,6 @@
     <script type="text/javascript">
         $(function(){
             if( {$select} == 1 ){
-                /*
-                if( {$more} ){
-                     
-                };*/
                 setInterval( status_show , 200 ) ;
                 $("#status").toggle();
             }else if ( {$select} == 2 ) {
@@ -75,11 +71,11 @@
                 $("#device").show();
             };
             $("#exit").click(function(){
-                window.location.href = '../index.php' ;
+                window.location.href = '../web/index.php' ;
             });
             $("#logout").click(function(){
                 if( confirm("確定要登出嗎") ){
-                    window.location.href = '../C8763/web/' ;
+                    window.location.href = '../web/index.php?log=0' ;
                 };
             });
             $("#customer_search").keyup(function(){
@@ -153,9 +149,10 @@
             $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
-                    url:'../php/client.php' ,
-                    data: { action:'turnlight' , light:$("#light").val()  } ,
+                    url:'http://localhost/npstore/php/client.php' ,
+                    data: { action:'test' , light:$("#light").val()  } ,
                     success: function( response ){
+                        console.log(response) ;
                         $("#hi").html( response ) ;
                     }
                 })

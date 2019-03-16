@@ -1,5 +1,11 @@
 {
-    "name" : "test_NPstore" ,
-    "version" : "0.0.1",
-    "main" : "app.js"
+    "name" : "NPstore" ,
+    "version" : "4.1.0",
+    "main" : "app.js",
+    "script" :{
+        "build_win" : "electron-packager . NPstore --platform=win32 --arch=x64 --asar --overwrite --electron-version=4.1.0" ,
+        "build_pi" : "electron-packager . NPstore --paltform=linux --arch=armv71 --asar --overwrite --electron-version=4.1.0" ,
+        "build_linux" : "electron-packager . NPstore --platform=linux --arch=x64 --asar --overwrite --electron-version=4.1.0" ,
+        "build_all" : "electron-packager . NPstore --all --all --asar --overwrite --electron-version=4.1.0" 
+    }
 }

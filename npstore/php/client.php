@@ -40,6 +40,10 @@
                 echo $client->record_search( $_GET['keyword'] , $_GET['time_start'] , $_GET['time_end'] ) ;
                 break ;
             }
+            case 'log' : {
+                echo $client->log( $_GET['who'] , $_GET['acc'] , $_GET['pwd'] ) ;
+                break ;
+            }
         }
     }
 ?>
