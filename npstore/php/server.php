@@ -58,6 +58,26 @@
             }
             return $str ;
         }
+        public function index_goods_show(){
+            global $mysql ;
+            $commodity = $mysql->query("select * from commodity_data"  ) ;
+            $i = 0 ;
+            $str = "" ;
+            foreach ($commodity as $goods ) {
+                if( !($i % 2) ){
+                    $str .= "<tr>" ;
+                }
+                $str .='
+                <td>' . $goods['commodity']  . '</td>
+                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
+                <td>' . $goods['price'] . "</td>" ;
+                if( $i % 2 ){
+                    $str .= "</tr>" ;
+                }
+                $i = $i+1 ;
+            }
+            return $str ;
+        }
         public function status_show( $shop){
             global $mysql ;
             $str = "" ;
@@ -90,9 +110,22 @@
             }
             return $str ;
         }
-        public function record_show( $shop){
+        public function shop_record_show( $shop){
             global $mysql ;
-            $record = $mysql->query('select * from record ') ;
+            $record = $mysql->query('select * from record where shop =' .$shop ) ;
+            $str ="" ;
+            foreach( $record as $record ){
+                $str .= '<tr>
+                        <td>' . $record['time']  . '</td>
+                        <td>' . $record['user'] . '</td>
+                        <td>' . $record['ord'] . '</td>
+                    </tr>' ;
+            }
+            return $str ;
+        }
+        public function customer_record_show( $user ){
+            global $mysql ;
+            $record = $mysql->query('select * from record where user =\'' .$user. '\'') ;
             $str ="" ;
             foreach( $record as $record ){
                 $str .= '<tr>
@@ -128,6 +161,26 @@
             }
             return $str ;
         }
+        public function index_commodity_search($keyword){
+            global $mysql ;
+            $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\'') ;
+            $str = "" ;
+            $i = 0 ;
+            foreach ( $resulte as $goods ) {
+                if( !($i % 2) ){
+                    $str .= "<tr>" ;
+                }
+                $str .='
+                <td>' . $goods['commodity']  . '</td>
+                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
+                <td>' . $goods['price'] . "</td>" ;
+                if( $i % 2 ){
+                    $str .= "</tr>" ;
+                }
+                $i = $i+1 ;
+            }
+            return $str ;
+        }
         public function record_search($keyword , $time_start , $time_end , $shop){
             global $mysql ;
             $str ="" ;
@@ -148,7 +201,7 @@
             global $mysql ;
             $str = "" ;
             if( $who == 'host' ){
-                $user = $mysql->query('select * from shop where host =\''.$acc .'\'' ) ;
+                $user = $mysql->query('select * from shop where host =\'' .$acc. '\'' ) ;
                 foreach ($user as $acc ) {
                     if( md5($pwd) == $acc['pwd'] ){ 
                         return $acc['shop_id'] ;
@@ -157,10 +210,10 @@
                 return 0 ;
                 
             }else if( $who == 'user' ){
-                $user = $mysql->query('select * from user where user =\''.$acc .'\'' ) ;
+                $user = $mysql->query('select * from user where user =\'' .$acc. '\'' ) ;
                 foreach ($user as $user ) {
                     if( md5($pwd) == $user['pwd'] ){
-                        return 1 ;
+                        return $user['user'] ;
                     }
                 }
                 return 0 ;

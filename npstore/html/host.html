@@ -16,17 +16,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>無人商店</title>
     <style type="text/css">
-        #option{
+        .option{
             width:11%;
             position:fixed;
             top:23%;
             left:2%;
         }
-        #option li{
+        .option li{
             list-style: none ;
             margin-top:25%;
         }
-        #option li a{
+        .option li a{
             color:black;
             text-decoration:none;
         }
@@ -58,18 +58,30 @@
 
     <script type="text/javascript">
         $(function(){
-            if( {$select} == 1 ){
-                setInterval( status_show , 200 ) ;
-                $("#status").toggle();
-            }else if ( {$select} == 2 ) {
-                record_show() ;
-                $("#record").show();
-            }else if ( {$select} == 3 ) {
-                goods_show() ;
-                $("#commodity").show();
-            }else if ( {$select} == 4 ) {
-                $("#device").show();
+            if( {$host} ){
+                $("#customer_option").hide() ;
+                if( {$select} == 1 ){
+                    setInterval( status_show , 200 ) ;
+                    $("#status").toggle();
+                }else if ( {$select} == 2 ) {
+                    shop_record_show() ;
+                    $("#record").show();
+                }else if ( {$select} == 3 ) {
+                    goods_show() ;
+                    $("#commodity").show();
+                };
+            }else{
+                $("#host_option").hide() ;
+                /*if( {$select} == 1 ){
+                    $("#acc").html(' 帳號 : {$user}') ;
+                    $("#account_set").toggle();
+                }else*/ if ( {$select} == 1 ) {
+                    $("#customer_search").hide() ;
+                    customer_record_show() ;
+                    $("#record").show();
+                };
             };
+
             $("#exit").click(function(){
                 window.location.href = '../web/index.php' ;
             });
@@ -86,7 +98,11 @@
                 };
             });
             $("#date_button").click(function(){
-                customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+                if( {$user} ){
+                    customer_searchf( {$user} , $("#time_start").val() , $("#time_end").val() ) ;
+                }else{
+                    customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+                };
             });
             $("#commodity_search").keyup(function(){
                 goods_search( $("#commodity_search").val() ) ;
@@ -120,21 +136,30 @@
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'status_show' , shop : {$host} } ,
+                    data : { action : 'status_show' , shop : '{$host}' } ,
                     success : function( data ){
                         $("#surroding_table").html( data ) ;
                     }
                 })
             };
-            function record_show(){
+            function shop_record_show(){
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_show' , shop : {$host} } ,
+                    data : { action : 'shop_record_show' , shop : '{$host}' } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
                 })
+            };
+            function customer_record_show(){
+                $.ajax({
+                    url:'../php/client.php' ,
+                    data: { action:'customer_record_show' , user: '{$user}' } ,
+                    success : function( record ){
+                        $("#record_tbody").html( record ) ;
+                    }
+                })    
             };
             function goods_show(){
                 $.ajax({
@@ -184,7 +209,7 @@
     <!---
         頁面選擇
     --->
-    <div id="option" >
+    <div id="host_option" class="option">
         <ul>
             <li>
                 <a href="?select=1">商店狀況</a>
@@ -202,6 +227,18 @@
             --->
         </ul>
     </div>
+    <div id="customer_option" class="option">
+        <ul>
+            <!--
+            <li>
+                <a href="?select=1">帳號管理</a>
+            </li>
+            -->
+            <li>
+                <a href="?select=1">消費紀錄</a>
+            </li>
+        </ul>
+    </div>
     
     <div id="btn-exlo" >
         <button id='exit' class="btn-outline-info btn" type="button" name="button">
@@ -210,6 +247,18 @@
         <button id='logout' class="btn-outline-danger btn" type="button" name="button">
             登出
         </button>
+    </div>
+    <div id="account_set" class="main_frame">
+        <br>
+        <div class="container">
+            <div class="">
+                <span id="acc"></span>
+            </div>
+            <br>
+            <div class="">
+                <button type="button" name="button">更改密碼</button>
+            </div>
+        </div>
     </div>
     <div id="status" class="main_frame">
         <div class="border bg-info text-white h4">

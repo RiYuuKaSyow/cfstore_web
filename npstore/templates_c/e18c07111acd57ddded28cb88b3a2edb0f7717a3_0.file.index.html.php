@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-06 07:45:59
+/* Smarty version 3.1.32, created on 2019-04-10 18:10:34
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5ca83d1724ca75_13155997',
+  'unifunc' => 'content_5cae157ac721b7_35203847',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1553087203,
+      1 => 1554912632,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ca83d1724ca75_13155997 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -59,17 +59,50 @@ function content_5ca83d1724ca75_13155997 (Smarty_Internal_Template $_smarty_tpl)
         a{
             text-decoration:none;
         }
+        #goods img{
+            max-width:45px ;
+            max-height:45px ;
+        }
     </style>
     <?php echo '<script'; ?>
  type="text/javascript">
         $(function(){
-                        
+            
             if( <?php echo $_smarty_tpl->tpl_vars['login']->value;?>
  ){
                 $("#log_frame").hide() ;
-                $("#member_link").show() ;  
                 $("#log_out").show();
-            };      
+                if( <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ ){
+                    $("#host_link").show() ;  
+                }else{
+                    $("#member_link").html( '<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+' ) ;
+                    $("#member_link").show() ;  
+                }
+            };
+            
+            if( <?php echo $_smarty_tpl->tpl_vars['commodity']->value;?>
+ ){
+                $("#index").hide() ;
+                commodity_show() ;
+                $("#commodity_data").show();
+            };
+            if( <?php echo $_smarty_tpl->tpl_vars['news']->value;?>
+ ){
+                $("#index").hide() ;
+                $("#news").show();
+            };
+            function commodity_show(){
+                $.ajax({
+                    //url: 'http://120.101.8.8/npstore/php/client.php' ,
+                    url: 'http://localhost/npstore/php/client.php' ,
+                    data:{ action : 'index_goods_show' } ,
+                    success : function( goods ){
+                        $("#good_show").html(goods) ;
+                    }
+                })
+            } ;
             $("#log_out").click(function(){
                 window.location.href = '../web/index.php?log=0' ;
             });
@@ -100,26 +133,108 @@ function content_5ca83d1724ca75_13155997 (Smarty_Internal_Template $_smarty_tpl)
                         </a>
                     </li>
                     <li> 
-                        <a href="#">
+                        <a href="../index.php">
+                            首頁
+                        </a> 
+                    </li>
+                    <li> 
+                        <a href="?news=show">
                             消息專區
                         </a> 
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="?commodity=show">
                             商品專區
                         </a>
                     </li>
                     <li>
-                        <a id="member_link" href="../web/host.php">
-                            會員專區
+                        <a id="member_link" href="../web/host.php" style="display:none;" >
+                            
+                        </a>
+                    </li>
+                    <li>
+                        <a id="host_link" href="../web/host.php" style="display:none;" >
+                            店家專區
                         </a>
                     </li>
                 </ul>
             
         </div>
         <div id="main_frame" class="">
-            nothing now <br>
-            comming soon
+            <div id="index" class="">
+                <div id="carousel" class=" carousel slide " data-ride="carousel" data-interval="3500">
+                    <div class="carousel-inner text-center">
+                      <div class="carousel-item active">
+                        <img class="w-50" src="../img/img3.jpg" alt="" style="width:1000px;" >
+                      </div>
+                      <div class="carousel-item">
+                        <img class="w-50" src="../img/img4.jpg" alt="">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="w-50" src="../img/img5.jpg" alt="">
+                      </div>
+                    </div>
+                    <a href="#carousel" class="carousel-control-prev" role="button" data-slide="prev" >
+                      <span class="bg-dark carousel-control-prev-icon"></span>
+                    </a>
+                    <a href="#carousel" class="carousel-control-next" role="button" data-slide="next" >
+                      <span class="bg-dark carousel-control-next-icon"></span>
+                    </a>
+                    <ol class=" carousel-indicators" >
+                      <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                      <li data-target="#carousel" data-slide-to="1" ></li>
+                      <li data-target="#carousel" data-slide-to="2" ></li>
+                    </ol>
+                  </div>
+                </div>
+            </div>
+            <div id="news" class="" style="display:none ;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <table class="table text-center">
+                                <thead>
+                                    <th>發布時間</th>
+                                    <th>消息內容</th>
+                                </thead>
+                                <tbody>
+                                    <td>2019/4/10</td>
+                                    <td>5/1即將開幕</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="commodity_data" class="" style="display:none ;" >
+                <div id="commodity" style="margin-top:3%;" >
+                    <div class=" container ">
+                        <div class=" row ">
+                            <div class=" col-sm-6 col-xs-6">
+                                查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">
+                            </div>
+                            <div class=" col-sm-3 col-xs-3 ">
+                                <h6 id="remainder_order_resulte"></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <table id="goods" class=" table table-bordered text-center">
+                        <thead class="thead-light" >
+                            <tr>
+                                <th>商品</th>
+                                <th>照片</th>
+                                <th>價格</th>
+                                <th>商品</th>
+                                <th>照片</th>
+                                <th>價格</th>
+                            </tr>
+                        </thead>
+                        <tbody id="good_show">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-18 11:39:26
+/* Smarty version 3.1.32, created on 2019-04-10 18:13:52
   from 'E:\xampp\htdocs\npstore\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c8f755e628092_26906520',
+  'unifunc' => 'content_5cae1640a978a5_38792728',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eae682bccd5d570c50b09ecc92e03c562a14be27' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\host.html',
-      1 => 1552905563,
+      1 => 1554912821,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cae1640a978a5_38792728 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -49,17 +49,17 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>無人商店</title>
     <style type="text/css">
-        #option{
+        .option{
             width:11%;
             position:fixed;
             top:23%;
             left:2%;
         }
-        #option li{
+        .option li{
             list-style: none ;
             margin-top:25%;
         }
-        #option li a{
+        .option li a{
             color:black;
             text-decoration:none;
         }
@@ -92,22 +92,37 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
     <?php echo '<script'; ?>
  type="text/javascript">
         $(function(){
-            if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+            if( <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ ){
+                $("#customer_option").hide() ;
+                if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 1 ){
-                setInterval( status_show , 200 ) ;
-                $("#status").toggle();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+                    setInterval( status_show , 200 ) ;
+                    $("#status").toggle();
+                }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 2 ) {
-                record_show() ;
-                $("#record").show();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+                    shop_record_show() ;
+                    $("#record").show();
+                }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
  == 3 ) {
-                goods_show() ;
-                $("#commodity").show();
-            }else if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
- == 4 ) {
-                $("#device").show();
+                    goods_show() ;
+                    $("#commodity").show();
+                };
+            }else{
+                $("#host_option").hide() ;
+                /*if( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 1 ){
+                    $("#acc").html(' 帳號 : <?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+') ;
+                    $("#account_set").toggle();
+                }else*/ if ( <?php echo $_smarty_tpl->tpl_vars['select']->value;?>
+ == 1 ) {
+                    $("#customer_search").hide() ;
+                    customer_record_show() ;
+                    $("#record").show();
+                };
             };
+
             $("#exit").click(function(){
                 window.location.href = '../web/index.php' ;
             });
@@ -124,7 +139,13 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
                 };
             });
             $("#date_button").click(function(){
-                customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+                if( <?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+ ){
+                    customer_searchf( <?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+ , $("#time_start").val() , $("#time_end").val() ) ;
+                }else{
+                    customer_searchf( $("#customer_search").val() , $("#time_start").val() , $("#time_end").val() ) ;
+                };
             });
             $("#commodity_search").keyup(function(){
                 goods_search( $("#commodity_search").val() ) ;
@@ -160,23 +181,33 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'status_show' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
- } ,
+                    data : { action : 'status_show' , shop : '<?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+' } ,
                     success : function( data ){
                         $("#surroding_table").html( data ) ;
                     }
                 })
             };
-            function record_show(){
+            function shop_record_show(){
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_show' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
- } ,
+                    data : { action : 'shop_record_show' , shop : '<?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+' } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
                 })
+            };
+            function customer_record_show(){
+                $.ajax({
+                    url:'../php/client.php' ,
+                    data: { action:'customer_record_show' , user: '<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+' } ,
+                    success : function( record ){
+                        $("#record_tbody").html( record ) ;
+                    }
+                })    
             };
             function goods_show(){
                 $.ajax({
@@ -192,7 +223,7 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
             $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
-                    url:'http://localhost/npstore/php/client.php' ,
+                    url:'http://120.101.8.8/npstore/php/client.php' ,
                     data: { action:'test' , light:$("#light").val() , shop :<?php echo $_smarty_tpl->tpl_vars['host']->value;?>
  } ,
                     success: function( response ){
@@ -231,7 +262,7 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
     <!---
         頁面選擇
     --->
-    <div id="option" >
+    <div id="host_option" class="option">
         <ul>
             <li>
                 <a href="?select=1">商店狀況</a>
@@ -249,6 +280,18 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
             --->
         </ul>
     </div>
+    <div id="customer_option" class="option">
+        <ul>
+            <!--
+            <li>
+                <a href="?select=1">帳號管理</a>
+            </li>
+            -->
+            <li>
+                <a href="?select=1">消費紀錄</a>
+            </li>
+        </ul>
+    </div>
     
     <div id="btn-exlo" >
         <button id='exit' class="btn-outline-info btn" type="button" name="button">
@@ -257,6 +300,18 @@ function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl)
         <button id='logout' class="btn-outline-danger btn" type="button" name="button">
             登出
         </button>
+    </div>
+    <div id="account_set" class="main_frame">
+        <br>
+        <div class="container">
+            <div class="">
+                <span id="acc"></span>
+            </div>
+            <br>
+            <div class="">
+                <button type="button" name="button">更改密碼</button>
+            </div>
+        </div>
     </div>
     <div id="status" class="main_frame">
         <div class="border bg-info text-white h4">

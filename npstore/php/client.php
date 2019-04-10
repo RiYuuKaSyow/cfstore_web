@@ -1,8 +1,8 @@
 <?php
     if( isset($_GET['action'])  ){
 
-        $client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
-        //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
         $action = $_GET['action'] ;
@@ -28,12 +28,20 @@
                 echo $client->status_show($_GET['shop']) ;
                 break ;
             }
-            case 'record_show' : {
-                echo $client->record_show($_GET['shop']) ;
+            case 'shop_record_show' : {
+                echo $client->shop_record_show($_GET['shop']) ;
+                break ;
+            }
+            case 'customer_record_show' : {
+                echo $client->customer_record_show($_GET['user']) ;
                 break ;
             }
             case 'commodity_search' : {
                 echo $client->commodity_search( $_GET['keyword'] , $_GET['orderby'] , $_GET['shop']) ;
+                break ;
+            }
+            case 'index_goods_show' : {
+                echo $client->index_goods_show() ;
                 break ;
             }
             case 'record_search' : {
