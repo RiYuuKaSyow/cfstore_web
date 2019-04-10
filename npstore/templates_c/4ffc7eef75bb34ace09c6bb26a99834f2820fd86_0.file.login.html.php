@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-16 15:59:42
+/* Smarty version 3.1.32, created on 2019-03-18 11:25:28
   from 'E:\xampp\htdocs\npstore\html\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c8d0f5e108e91_74162458',
+  'unifunc' => 'content_5c8f72183fc083_74592763',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4ffc7eef75bb34ace09c6bb26a99834f2820fd86' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\login.html',
-      1 => 1552748379,
+      1 => 1552833814,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c8d0f5e108e91_74162458 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c8f72183fc083_74592763 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -61,7 +61,6 @@ function content_5c8d0f5e108e91_74162458 (Smarty_Internal_Template $_smarty_tpl)
  type="text/javascript">
         $(function(){
             var $check = 0 ;
-            
             $("#host_check").change(function(){
                 $check = !$check ;
             });
@@ -76,7 +75,7 @@ function content_5c8d0f5e108e91_74162458 (Smarty_Internal_Template $_smarty_tpl)
                             data: { action: 'log' , who:'host' , acc : $("#acc").val() , pwd : $("#pwd").val() } ,
                             success : function( check ){
                                 if( check ){
-                                    $("#host_check").val( check ) ;
+                                    $("#host").val(check) ;
                                     $("#log_form").submit();
                                 }else{
                                     alert("帳號或密碼錯誤");
@@ -90,6 +89,7 @@ function content_5c8d0f5e108e91_74162458 (Smarty_Internal_Template $_smarty_tpl)
                             data: { action: 'log' , who:'user' , acc : $("#acc").val() , pwd : $("#pwd").val() } ,
                             success : function( check ){
                                 if( check!=0 ){
+                                    $("#host").val( 'user' ) ;
                                     $("#log_form").submit();
                                 }else{
                                     alert("帳號或密碼錯誤") ;     
@@ -117,6 +117,7 @@ function content_5c8d0f5e108e91_74162458 (Smarty_Internal_Template $_smarty_tpl)
                 <input type="text" id="acc" name="acc"value="" class="" placeholder="帳號" ><br><br>
                 <input type="password" id="pwd" name="pwd" class="" value="" placeholder="密碼"><br><br>
                 <input type="text" name="log" value="1" style="display:none;">
+                <input type="text" name="host" value="" style="display:none;">
                 <input type="checkbox" id="host_check" name="host_check" value=""><span style="font-size:1; color:#777">商家帳號</span><br><br>
                 <button type="button" id="leave" name="button" class="btn btn-sm btn-outline-danger">取消</button>
                 <button type="button" id="log_btn" class="float-right btn btn-sm btn-outline-warning ">登入</button>

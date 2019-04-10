@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-16 16:02:05
+/* Smarty version 3.1.32, created on 2019-03-18 11:39:26
   from 'E:\xampp\htdocs\npstore\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c8d0fed18ca67_81450853',
+  'unifunc' => 'content_5c8f755e628092_26906520',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eae682bccd5d570c50b09ecc92e03c562a14be27' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\host.html',
-      1 => 1552748523,
+      1 => 1552905563,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5c8f755e628092_26906520 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -136,7 +136,8 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                     $.ajax({
                         method : 'POST' ,
                         url : '../php/client.php' ,
-                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : '' } ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : '' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                         success : function( data ){
                             $("#good_show").html( data ) ;
                         }
@@ -146,7 +147,8 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                     $.ajax({
                         method : 'POST' ,
                         url : '../php/client.php' ,
-                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : 'desc' } ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : 'desc' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                         success : function( data ){
                             $("#good_show").html( data ) ;
                         }
@@ -158,7 +160,8 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'status_show' } ,
+                    data : { action : 'status_show' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success : function( data ){
                         $("#surroding_table").html( data ) ;
                     }
@@ -168,7 +171,8 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_show' } ,
+                    data : { action : 'record_show' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
@@ -178,28 +182,31 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'host_goods_show' } ,
+                    data : { action : 'host_goods_show' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success : function(data){
                         $("#good_show").html(data) ;
                     }
                 })
-            };
+            };/*
             $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
                     url:'http://localhost/npstore/php/client.php' ,
-                    data: { action:'test' , light:$("#light").val()  } ,
+                    data: { action:'test' , light:$("#light").val() , shop :<?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success: function( response ){
                         console.log(response) ;
                         $("#hi").html( response ) ;
                     }
                 })
-            });
+            });*/
             function customer_searchf( $keyword , $time_start , $time_end ){
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_search' , keyword : $keyword , time_start : $time_start , time_end : $time_end  } ,
+                    data : { action : 'record_search' , keyword : $keyword , time_start : $time_start , time_end : $time_end , shop :<?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
@@ -209,7 +216,8 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action:'commodity_search' , keyword:$keyword , orderby:'' } ,
+                    data : { action:'commodity_search' , keyword:$keyword , orderby:'' , shop : <?php echo $_smarty_tpl->tpl_vars['host']->value;?>
+ } ,
                     success : function( search ){
                         $("#good_show").html( search ) ;
                     }
@@ -220,6 +228,9 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
 >
 </head>
 <body>
+    <!---
+        頁面選擇
+    --->
     <div id="option" >
         <ul>
             <li>
@@ -231,11 +242,14 @@ function content_5c8d0fed18ca67_81450853 (Smarty_Internal_Template $_smarty_tpl)
             <li>
                 <a href="?select=3">商品資訊</a>
             </li>
+            <!---
             <li>
                 <a href="?select=4">開關控制</a>
             </li>
+            --->
         </ul>
     </div>
+    
     <div id="btn-exlo" >
         <button id='exit' class="btn-outline-info btn" type="button" name="button">
             離開

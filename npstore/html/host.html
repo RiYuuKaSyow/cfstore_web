@@ -98,7 +98,7 @@
                     $.ajax({
                         method : 'POST' ,
                         url : '../php/client.php' ,
-                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : '' } ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : '' , shop : {$host} } ,
                         success : function( data ){
                             $("#good_show").html( data ) ;
                         }
@@ -108,7 +108,7 @@
                     $.ajax({
                         method : 'POST' ,
                         url : '../php/client.php' ,
-                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : 'desc' } ,
+                        data : { action : 'commodity_search' , keyword : $("#commodity_search").val() , orderby : 'desc' , shop : {$host} } ,
                         success : function( data ){
                             $("#good_show").html( data ) ;
                         }
@@ -120,7 +120,7 @@
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'status_show' } ,
+                    data : { action : 'status_show' , shop : {$host} } ,
                     success : function( data ){
                         $("#surroding_table").html( data ) ;
                     }
@@ -130,7 +130,7 @@
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_show' } ,
+                    data : { action : 'record_show' , shop : {$host} } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
@@ -140,28 +140,28 @@
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'host_goods_show' } ,
+                    data : { action : 'host_goods_show' , shop : {$host} } ,
                     success : function(data){
                         $("#good_show").html(data) ;
                     }
                 })
-            };
+            };/*
             $("#turnlight").click(function(){
                 $.ajax({
                     method:'POST' ,
-                    url:'http://localhost/npstore/php/client.php' ,
-                    data: { action:'test' , light:$("#light").val()  } ,
+                    url:'http://120.101.8.8/npstore/php/client.php' ,
+                    data: { action:'test' , light:$("#light").val() , shop :{$host} } ,
                     success: function( response ){
                         console.log(response) ;
                         $("#hi").html( response ) ;
                     }
                 })
-            });
+            });*/
             function customer_searchf( $keyword , $time_start , $time_end ){
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action : 'record_search' , keyword : $keyword , time_start : $time_start , time_end : $time_end  } ,
+                    data : { action : 'record_search' , keyword : $keyword , time_start : $time_start , time_end : $time_end , shop :{$host} } ,
                     success : function( record ){
                         $("#record_tbody").html( record ) ;
                     }
@@ -171,7 +171,7 @@
                 $.ajax({
                     method : 'POST' ,
                     url : '../php/client.php' ,
-                    data : { action:'commodity_search' , keyword:$keyword , orderby:'' } ,
+                    data : { action:'commodity_search' , keyword:$keyword , orderby:'' , shop : {$host} } ,
                     success : function( search ){
                         $("#good_show").html( search ) ;
                     }
@@ -181,6 +181,9 @@
     </script>
 </head>
 <body>
+    <!---
+        頁面選擇
+    --->
     <div id="option" >
         <ul>
             <li>
@@ -192,11 +195,14 @@
             <li>
                 <a href="?select=3">商品資訊</a>
             </li>
+            <!---
             <li>
                 <a href="?select=4">開關控制</a>
             </li>
+            --->
         </ul>
     </div>
+    
     <div id="btn-exlo" >
         <button id='exit' class="btn-outline-info btn" type="button" name="button">
             離開

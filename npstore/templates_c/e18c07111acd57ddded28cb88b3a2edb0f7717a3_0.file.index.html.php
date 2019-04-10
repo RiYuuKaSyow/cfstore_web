@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-03-16 15:56:11
+/* Smarty version 3.1.32, created on 2019-04-06 07:45:59
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5c8d0e8b8e5894_38345599',
+  'unifunc' => 'content_5ca83d1724ca75_13155997',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1552748160,
+      1 => 1553087203,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5c8d0e8b8e5894_38345599 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ca83d1724ca75_13155997 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -81,7 +81,9 @@ function content_5c8d0e8b8e5894_38345599 (Smarty_Internal_Template $_smarty_tpl)
     <div class=" container ">
         <div class="row">
             <div class="col-sm-3 col-xs-3">
-                NP!store 無人商店
+                <a href="../web/index.php">
+                    <img src="../logo/logo1.png" width="75%" height="75%" alt="">
+                </a>
             </div>
             <div id="logrow" class="col-sm col-xs">
                 <form id="log_frame" class="" action="../web/login.php" method="post">
@@ -99,17 +101,17 @@ function content_5c8d0e8b8e5894_38345599 (Smarty_Internal_Template $_smarty_tpl)
                     </li>
                     <li> 
                         <a href="#">
-                            熱門商品
+                            消息專區
                         </a> 
                     </li>
                     <li>
                         <a href="#">
-                            促銷活動
+                            商品專區
                         </a>
                     </li>
                     <li>
-                        <a id="member_link" href="../web/host.php" style="display:none;">
-                            會員帳號
+                        <a id="member_link" href="../web/host.php">
+                            會員專區
                         </a>
                     </li>
                 </ul>

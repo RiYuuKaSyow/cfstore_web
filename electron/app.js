@@ -8,11 +8,11 @@ function createwindow(){
     mainwindow = new browser({
         resizable:false ,
         title:'無人商店結帳系統' ,
-        icon:'png1.png'
+        icon:'logo.png'
     });
     
     mainwindow.loadFile('shop.html') ;
-    //mainwindow.webContents.openDevTools() ;
+    mainwindow.webContents.openDevTools() ;
     mainwindow.setFullScreen(true) ;
     mainwindow.on('closed',function(){
         mainwindow = null ;

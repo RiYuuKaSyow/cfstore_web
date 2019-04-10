@@ -5,10 +5,22 @@
     $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
     $mysql = new PDO( $dbn , $user , $pwd ) ;
     
-    class testA {
+    class EXE {
+        public function exe_check_id( $id , $user ){
+            global $mysql ;
+            $str = "" ;
+            $selectsql = $mysql->query('select * from user where `id` = ' .$id. ' and `user` = \'' .$user. '\' ') ;
+            foreach ($selectsql as $user) {
+                return $user['user'] ;
+            }
+            return 0 ;
+        }
+    }
+    
+    class Server extends EXE {
         
         public function test(){
-            return 'test success' ;
+            return md5(48763) ;
         }
         public function turnlight($light){   
             return $light ;          
@@ -25,9 +37,9 @@
                 }
             }
         }
-        public function host_goods_show(){
+        public function host_goods_show( $shop ){
             global $mysql ;
-            $commodity = $mysql->query("select * from commodity_data") ;
+            $commodity = $mysql->query("select * from commodity_data where shop =".$shop  ) ;
             $i = 0 ;
             $str = "" ;
             foreach ($commodity as $goods ) {
@@ -36,7 +48,7 @@
                 }
                 $str .='
                 <td>' . $goods['commodity']  . '</td>
-                <td> <img src="../../img/img1.jpg" alt=""> </td>
+                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
                 <td>' . $goods['price'] . "</td>
                 <td>" . $goods['remainder'] ."</td>" ;
                 if( $i % 2 ){
@@ -46,7 +58,7 @@
             }
             return $str ;
         }
-        public function status_show(){
+        public function status_show( $shop){
             global $mysql ;
             $str = "" ;
             $status = $mysql->query('select * from status') ;
@@ -78,7 +90,7 @@
             }
             return $str ;
         }
-        public function record_show(){
+        public function record_show( $shop){
             global $mysql ;
             $record = $mysql->query('select * from record ') ;
             $str ="" ;
@@ -95,9 +107,9 @@
             global $mysql ;
             $ord = $mysql->query('select * from ord') ;
         }
-        public function commodity_search($keyword , $orderby){
+        public function commodity_search($keyword , $orderby , $shop){
             global $mysql ;
-            $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\' order by remainder ' . $orderby ) ;
+            $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\' and shop ='. $shop .' order by remainder ' . $orderby ) ;
             $str = "" ;
             $i = 0 ;
             foreach ( $resulte as $goods ) {
@@ -106,7 +118,7 @@
                 }
                 $str .='
                 <td>' . $goods['commodity']  . '</td>
-                <td> <img src="../../img/img1.jpg" alt=""> </td>
+                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
                 <td>' . $goods['price'] . "</td>
                 <td>" . $goods['remainder'] ."</td>" ;
                 if( $i % 2 ){
@@ -116,7 +128,7 @@
             }
             return $str ;
         }
-        public function record_search($keyword , $time_start , $time_end ){
+        public function record_search($keyword , $time_start , $time_end , $shop){
             global $mysql ;
             $str ="" ;
             $date_end = new DateTime($time_end) ;
@@ -136,15 +148,16 @@
             global $mysql ;
             $str = "" ;
             if( $who == 'host' ){
-                $user = $mysql->query('select * from shop where host ='. $acc ) ;
-                foreach ($user as $user ) {
-                    if( md5($pwd) == $user['pwd'] ){
-                        return $user['shop_id'] ;
+                $user = $mysql->query('select * from shop where host =\''.$acc .'\'' ) ;
+                foreach ($user as $acc ) {
+                    if( md5($pwd) == $acc['pwd'] ){ 
+                        return $acc['shop_id'] ;
                     }
                 }
                 return 0 ;
+                
             }else if( $who == 'user' ){
-                $user = $mysql->query('select * from user where user ='. $acc ) ;
+                $user = $mysql->query('select * from user where user =\''.$acc .'\'' ) ;
                 foreach ($user as $user ) {
                     if( md5($pwd) == $user['pwd'] ){
                         return 1 ;
@@ -157,5 +170,6 @@
 
     $server = new SoapServer( null , array( 'uri'=>'48763' ) ) ;
     //$server = new SoapServer(null) ;
-    $server->setClass('testA') ;
+    $server->setClass('Server') ;
     $server->handle() ;
+    $mysql = null ;
