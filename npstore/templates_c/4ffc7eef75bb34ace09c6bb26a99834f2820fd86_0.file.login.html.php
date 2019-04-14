@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 06:56:19
+/* Smarty version 3.1.32, created on 2019-04-14 07:56:18
   from 'E:\xampp\htdocs\npstore\html\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2bd7389b4d5_32825618',
+  'unifunc' => 'content_5cb2cb828bad42_58965099',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4ffc7eef75bb34ace09c6bb26a99834f2820fd86' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\login.html',
-      1 => 1555217777,
+      1 => 1555221375,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2bd7389b4d5_32825618 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cb2cb828bad42_58965099 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -28,6 +28,7 @@ function content_5cb2bd7389b4d5_32825618 (Smarty_Internal_Template $_smarty_tpl)
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="0">
+    <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <?php echo '<script'; ?>
  src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"><?php echo '</script'; ?>
