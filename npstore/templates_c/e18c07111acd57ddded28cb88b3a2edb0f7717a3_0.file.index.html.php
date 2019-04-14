@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-10 18:10:34
+/* Smarty version 3.1.32, created on 2019-04-14 06:59:48
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cae157ac721b7_35203847',
+  'unifunc' => 'content_5cb2be44556013_91967520',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1554912632,
+      1 => 1555217987,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cb2be44556013_91967520 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -49,6 +49,21 @@ function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl)
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>無人商店</title>
     <style type="text/css">
+        body{
+            background-color: #ffcc00;
+            background-image: url('../logo/logo2.png');
+            background-repeat: space;
+            background-size:8% 8% ;
+            background-position: center;
+        }
+        #cover{
+            background: #
+        }
+        #logo_ad{
+            font-size: 5% ;
+            position: absolute;
+            left:15% ;
+        }
         #logrow{
             margin:2px 0 10px 0 ;
         }
@@ -60,8 +75,14 @@ function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl)
             text-decoration:none;
         }
         #goods img{
-            max-width:45px ;
-            max-height:45px ;
+            max-width:100px ;
+            max-height:100px ;
+        }
+        #main_frame{
+            background-color: #fff;
+        }
+        #top{
+            background-color: #fff;
         }
     </style>
     <?php echo '<script'; ?>
@@ -93,6 +114,19 @@ function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl)
                 $("#index").hide() ;
                 $("#news").show();
             };
+            $("#commodity_search").keyup(function(){
+                goods_search( $("#commodity_search").val() ) ;
+            });
+            function goods_search( $keyword ){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../php/client.php' ,
+                    data : { action:'index_commodity_search' , keyword:$keyword  } ,
+                    success : function( search ){
+                        $("#good_show").html( search ) ;
+                    }
+                })
+            }
             function commodity_show(){
                 $.ajax({
                     //url: 'http://120.101.8.8/npstore/php/client.php' ,
@@ -111,12 +145,13 @@ function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl)
 >
 </head>
 <body>
-    <div class=" container ">
+    <div id="top" class=" container ">
         <div class="row">
             <div class="col-sm-3 col-xs-3">
                 <a href="../web/index.php">
                     <img src="../logo/logo1.png" width="75%" height="75%" alt="">
                 </a>
+                <div id="logo_ad">Logo通過<a href="https://www.designevo.com/tw/" title="免費線上logo製作軟體">DesignEvo</a>設計製作</div>
             </div>
             <div id="logrow" class="col-sm col-xs">
                 <form id="log_frame" class="" action="../web/login.php" method="post">
@@ -125,7 +160,7 @@ function content_5cae157ac721b7_35203847 (Smarty_Internal_Template $_smarty_tpl)
                 <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
-        <div class="container bg-warning">
+        <div  class="container bg-warning">
                 <ul class="nav navbar list-inline">
                     <li>
                         <a class="disabled" style="color:#f0f0f0 ;">

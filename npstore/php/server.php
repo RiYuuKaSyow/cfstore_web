@@ -15,6 +15,27 @@
             }
             return 0 ;
         }
+        public function exe_photo( $json ){
+            global $mysql ;
+            $str = '' ;
+            $price_count = 0 ;
+            $i = 0 ;
+                                    //  查詢    價格  從   商品資訊        哪裡   商品名字  = 辨識結果$json[3]
+            $price_sel = $mysql->query('select price from commodity_data where commodity =\'qwe\'') ;
+            foreach( $price_sel as $price ){
+                $i++ ;
+                // 中間的<td>數量</td> 希望可以從辨識回傳取得
+                // <td>' . $json[?] .'
+                $str .= '<tr>
+                            <td>' . $json[3] . '</td>
+                            <td>1</td>
+                            <td id="com_price' .$i. '">' . $price['price'] . '</td>
+                        </tr>' ;
+                //$price_count += (int)$json[?] * (int)$prince['price']
+                $price_count += (int)$price['price'] ;
+            }
+            return array($str , $price_count)  ;
+        }
     }
     
     class Server extends EXE {

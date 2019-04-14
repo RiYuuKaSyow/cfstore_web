@@ -15,7 +15,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>無人商店</title>
+    <meta name="description" content="運用高科技:影像辨識技術，來幫你辨識商品，結帳可以自己來!">
+    <meta name="keywords" content="無人商店,商店,便利商店,無人,便利,npstore,NPstore,nopeoplestore,npshop,NPshop,nopeopleshop">
     <style type="text/css">
+        body{
+            background-color: #ffcc00;
+            background-image: url('../logo/logo2.png');
+            background-repeat: space;
+            background-size:8% 8% ;
+            background-position: center;
+        }
+        #cover{
+            background: #
+        }
+        #logo_ad{
+            font-size: 5% ;
+            position: absolute;
+            left:15% ;
+        }
         #logrow{
             margin:2px 0 10px 0 ;
         }
@@ -27,8 +44,14 @@
             text-decoration:none;
         }
         #goods img{
-            max-width:45px ;
-            max-height:45px ;
+            max-width:100px ;
+            max-height:100px ;
+        }
+        #main_frame{
+            background-color: #fff;
+        }
+        #top{
+            background-color: #fff;
         }
     </style>
     <script type="text/javascript">
@@ -54,6 +77,19 @@
                 $("#index").hide() ;
                 $("#news").show();
             };
+            $("#commodity_search").keyup(function(){
+                goods_search( $("#commodity_search").val() ) ;
+            });
+            function goods_search( $keyword ){
+                $.ajax({
+                    method : 'POST' ,
+                    url : '../php/client.php' ,
+                    data : { action:'index_commodity_search' , keyword:$keyword  } ,
+                    success : function( search ){
+                        $("#good_show").html( search ) ;
+                    }
+                })
+            }
             function commodity_show(){
                 $.ajax({
                     //url: 'http://120.101.8.8/npstore/php/client.php' ,
@@ -71,12 +107,13 @@
     </script>
 </head>
 <body>
-    <div class=" container ">
+    <div id="top" class=" container ">
         <div class="row">
             <div class="col-sm-3 col-xs-3">
                 <a href="../web/index.php">
                     <img src="../logo/logo1.png" width="75%" height="75%" alt="">
                 </a>
+                <div id="logo_ad">Logo通過<a href="https://www.designevo.com/tw/" title="免費線上logo製作軟體">DesignEvo</a>設計製作</div>
             </div>
             <div id="logrow" class="col-sm col-xs">
                 <form id="log_frame" class="" action="../web/login.php" method="post">
@@ -85,7 +122,7 @@
                 <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
-        <div class="container bg-warning">
+        <div  class="container bg-warning">
                 <ul class="nav navbar list-inline">
                     <li>
                         <a class="disabled" style="color:#f0f0f0 ;">

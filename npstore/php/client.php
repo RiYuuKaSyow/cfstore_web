@@ -40,6 +40,10 @@
                 echo $client->commodity_search( $_GET['keyword'] , $_GET['orderby'] , $_GET['shop']) ;
                 break ;
             }
+            case 'index_commodity_search' : {
+                echo $client->index_commodity_search( $_GET['keyword'] ) ;
+                break ;
+            }
             case 'index_goods_show' : {
                 echo $client->index_goods_show() ;
                 break ;
@@ -58,4 +62,48 @@
             }
         }
     }
+    
+    if( isset($_POST['imgBase64']) ){
+        //$client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client = new SoapClient( null , $client_array ) ;
+        
+        $img = $_POST['imgBase64'] ;
+        $img = str_replace('data:image/png;base64,' , '' ,$img) ;
+        $img = str_replace(' ' , '+' , $img ) ;
+        $data = base64_decode($img) ;
+        $file = '../img/test.png' ;
+        file_put_contents($file,$data) ;        
+        exec('curl -X POST -F image=@' .$file. ' http://120.101.8.8:5000/' , $json) ;
+        $json = str_replace("\"" , '' , $json) ;
+        $json = str_replace("," , '' , $json) ;
+        $json = str_replace("label:" , '' , $json) ;
+        
+        list( $str , $price_count ) = $client->exe_photo($json) ;
+        echo json_encode( array(
+            "str" => $str ,
+            "price_count" => $price_count
+        ) ) ;
+        /*
+        echo $str ;
+        echo '<table class="t0 table table-bordered">
+            <thead class=" thead-light ">
+                <tr>
+                    <th>總價格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="price_count">'. $price_count .'</td>
+                </tr>
+            </tbody>
+        </table>'
+        */
+        /*
+        echo '<tr>
+                <td>' . $json[3] .'</td>
+            </tr>' ; 
+        */
+    }
+    
 ?>
