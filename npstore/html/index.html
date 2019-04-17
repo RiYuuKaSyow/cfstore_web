@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta http-equiv="UserContent-Type" content="text/html; charset=utf-8" />
@@ -19,15 +19,15 @@
     <meta name="description" content="運用高科技:影像辨識技術，來幫你辨識商品，結帳可以自己來!">
     <meta name="keywords" content="無人商店,商店,便利商店,無人,便利,npstore,NPstore,nopeoplestore,npshop,NPshop,nopeopleshop">
     <style type="text/css">
+        html{
+            height:100vh;
+        }
         body{
             background-color: #ffcc00;
             background-image: url('../logo/logo2.png');
             background-repeat: space;
             background-size:8% 8% ;
             background-position: center;
-        }
-        #cover{
-            background: #
         }
         #logo_ad{
             font-size: 5% ;
@@ -45,11 +45,14 @@
             text-decoration:none;
         }
         #goods img{
-            max-width:100px ;
-            max-height:100px ;
+            max-width:70px ;
+            max-height:50px ;
         }
         #main_frame{
             background-color: #fff;
+        }
+        .frame_content{
+            min-height:77vh ;
         }
         #top{
             background-color: #fff;
@@ -64,7 +67,7 @@
                 if( {$host} ){
                     $("#host_link").show() ;  
                 }else{
-                    $("#member_link").html( '{$user}' ) ;
+                    $("#member_link").html( '店家' ) ;
                     $("#member_link").show() ;  
                 }
             };
@@ -93,8 +96,8 @@
             }
             function commodity_show(){
                 $.ajax({
-                    //url: 'http://120.101.8.8/npstore/php/client.php' ,
-                    url: 'http://localhost/npstore/php/client.php' ,
+                    url: 'http://120.101.8.8/npstore/php/client.php' ,
+                    //url: 'http://localhost/npstore/php/client.php' ,
                     data:{ action : 'index_goods_show' } ,
                     success : function( goods ){
                         $("#good_show").html(goods) ;
@@ -131,7 +134,7 @@
                         </a>
                     </li>
                     <li> 
-                        <a href="../index.php">
+                        <a href="../web/index.php">
                             首頁
                         </a> 
                     </li>
@@ -159,7 +162,7 @@
             
         </div>
         <div id="main_frame" class="">
-            <div id="index" class="">
+            <div id="index" class="frame_content">
                 <div id="carousel" class=" carousel slide " data-ride="carousel" data-interval="3500">
                     <div class="carousel-inner text-center">
                       <div class="carousel-item active">
@@ -186,8 +189,8 @@
                   </div>
                 </div>
             </div>
-            <div id="news" class="" style="display:none ;">
-                <div class="container">
+            <div id="news" class="frame_content" style="display:none ;">
+                <div class="container ">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
                             <table class="table text-center">
@@ -204,9 +207,9 @@
                     </div>
                 </div>
             </div>
-            <div id="commodity_data" class="" style="display:none ;" >
+            <div id="commodity_data" class="frame_content" style="display:none ;" >
                 <div id="commodity" style="margin-top:3%;" >
-                    <div class=" container ">
+                    <div class=" container">
                         <div class=" row ">
                             <div class=" col-sm-6 col-xs-6">
                                 查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 07:55:55
+/* Smarty version 3.1.32, created on 2019-04-14 10:28:27
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2cb6bbbfbe7_22433780',
+  'unifunc' => 'content_5cb2ef2bf3b138_08001937',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1555221352,
+      1 => 1555230136,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -52,15 +52,15 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
     <meta name="description" content="運用高科技:影像辨識技術，來幫你辨識商品，結帳可以自己來!">
     <meta name="keywords" content="無人商店,商店,便利商店,無人,便利,npstore,NPstore,nopeoplestore,npshop,NPshop,nopeopleshop">
     <style type="text/css">
+        html{
+            height:100vh;
+        }
         body{
             background-color: #ffcc00;
             background-image: url('../logo/logo2.png');
             background-repeat: space;
             background-size:8% 8% ;
             background-position: center;
-        }
-        #cover{
-            background: #
         }
         #logo_ad{
             font-size: 5% ;
@@ -78,11 +78,14 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
             text-decoration:none;
         }
         #goods img{
-            max-width:100px ;
-            max-height:100px ;
+            max-width:70px ;
+            max-height:50px ;
         }
         #main_frame{
             background-color: #fff;
+        }
+        .frame_content{
+            min-height:77vh ;
         }
         #top{
             background-color: #fff;
@@ -100,8 +103,7 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
  ){
                     $("#host_link").show() ;  
                 }else{
-                    $("#member_link").html( '<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
-' ) ;
+                    $("#member_link").html( '店家' ) ;
                     $("#member_link").show() ;  
                 }
             };
@@ -132,8 +134,8 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
             }
             function commodity_show(){
                 $.ajax({
-                    //url: 'http://120.101.8.8/npstore/php/client.php' ,
-                    url: 'http://localhost/npstore/php/client.php' ,
+                    url: 'http://120.101.8.8/npstore/php/client.php' ,
+                    //url: 'http://localhost/npstore/php/client.php' ,
                     data:{ action : 'index_goods_show' } ,
                     success : function( goods ){
                         $("#good_show").html(goods) ;
@@ -171,7 +173,7 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
                         </a>
                     </li>
                     <li> 
-                        <a href="../index.php">
+                        <a href="../web/index.php">
                             首頁
                         </a> 
                     </li>
@@ -199,7 +201,7 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
             
         </div>
         <div id="main_frame" class="">
-            <div id="index" class="">
+            <div id="index" class="frame_content">
                 <div id="carousel" class=" carousel slide " data-ride="carousel" data-interval="3500">
                     <div class="carousel-inner text-center">
                       <div class="carousel-item active">
@@ -226,8 +228,8 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
                   </div>
                 </div>
             </div>
-            <div id="news" class="" style="display:none ;">
-                <div class="container">
+            <div id="news" class="frame_content" style="display:none ;">
+                <div class="container ">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
                             <table class="table text-center">
@@ -244,9 +246,9 @@ function content_5cb2cb6bbbfbe7_22433780 (Smarty_Internal_Template $_smarty_tpl)
                     </div>
                 </div>
             </div>
-            <div id="commodity_data" class="" style="display:none ;" >
+            <div id="commodity_data" class="frame_content" style="display:none ;" >
                 <div id="commodity" style="margin-top:3%;" >
-                    <div class=" container ">
+                    <div class=" container">
                         <div class=" row ">
                             <div class=" col-sm-6 col-xs-6">
                                 查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">

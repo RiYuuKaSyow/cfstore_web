@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 07:56:18
+/* Smarty version 3.1.32, created on 2019-04-14 10:28:36
   from 'E:\xampp\htdocs\npstore\html\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2cb828bad42_58965099',
+  'unifunc' => 'content_5cb2ef3489abe8_00554637',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4ffc7eef75bb34ace09c6bb26a99834f2820fd86' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\login.html',
-      1 => 1555221375,
+      1 => 1555229753,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2cb828bad42_58965099 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cb2ef3489abe8_00554637 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -51,17 +51,21 @@ function content_5cb2cb828bad42_58965099 (Smarty_Internal_Template $_smarty_tpl)
     <title>無人商店</title>
     
     <style media="screen">
-        .log_frame{
+        .log_frame_div{
             padding-top: 5% ;
-            width: 40%;
-            height: 50% ;
+            width: 600px;
+            height: 400px ;
             border-style: solid;
             border-radius: 10%/50%;
             background-color: #fcfcfc;
             position:absolute;
-            top:24% ;
-            left:28% ;
             text-align: center;
+            left:50%;
+            top:50%;
+            
+            margin-top:-200px;
+            margin-left:-300px;
+            
         }
         body{
             background-image: url('../logo/logo1.png');
@@ -126,19 +130,21 @@ function content_5cb2cb828bad42_58965099 (Smarty_Internal_Template $_smarty_tpl)
     
 </head>
 <body>
-    <form id="log_form" class="" action="../web/login.php" method="post">
-        <div id="container" class="container">
-            <div class="log_frame">
-                <input type="text" id="acc" name="acc" value="" class="" placeholder="帳號" ><br><br>
-                <input type="password" id="pwd" name="pwd" class="" value="" placeholder="密碼"><br><br>
-                <input type="text" name="log" value="1" style="display:none;">
-                <input type="text" name="host" style="display:none;">
-                <input type="checkbox" id="host_check" name="host_check"><span style="font-size:1; color:#777">商家帳號</span><br><br>
-                <button type="button" id="leave" name="button" class="btn btn-sm btn-outline-danger">取消</button>
-                <button type="button" id="log_btn" class=" btn btn-sm btn-outline-warning ">登入</button>
+    <div >
+        <form id="log_form" class="" action="../web/login.php" method="post">
+            <div id="container" align="center" class="container">
+                <div class="log_frame_div">
+                    <input type="text" id="acc" name="acc" value="" class="" placeholder="帳號" ><br><br>
+                    <input type="password" id="pwd" name="pwd" class="" value="" placeholder="密碼"><br><br>
+                    <input type="text" name="log" value="1" style="display:none;">
+                    <input type="text" name="host" style="display:none;">
+                    <input type="checkbox" id="host_check" name="host_check"><span style="font-size:1; color:#777">商家帳號</span><br><br>
+                    <button type="button" id="leave" name="button" class="btn btn-sm btn-outline-danger">取消</button>
+                    <button type="button" id="log_btn" class=" btn btn-sm btn-outline-warning ">登入</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
     
 </body>
 </html><?php }

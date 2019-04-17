@@ -54,6 +54,25 @@
             display: none;
             margin-top: 1% ;
         }
+        #record_alert{
+            width: 600px;
+            height: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -300px;
+            margin-top: -250px;
+            border-style: solid;
+            border-color: #ccc;
+            background-color: #fff;
+            z-index: 3;
+            text-align: center;
+        }
+        #record_alert table{
+            position: absolute;
+            top: 25%;
+            left: 25%;
+        }
 
     </style>
 
@@ -203,7 +222,22 @@
                     }
                 })
             }
+            
         });
+        function show_record_alert(ord){
+            $.ajax({
+                url:'http://120.101.8.8/npstore/php/client.php' ,
+                //url:'http://localhost/npstore/php/client.php',
+                data:{ action:'ord_alert' , ord:ord } ,
+                success: function( data ){
+                    $("#record_alert").html(data) ;
+                    $("#record_alert").fadeIn(300) ;
+                }
+            })
+        };
+        function btn_exit(){
+            $("#record_alert").fadeOut(300) ;   
+        };
     </script>
 </head>
 <body>
@@ -310,6 +344,9 @@
             </div>
         </div>
         <br>
+        <div id="record_alert" class="" style="display:none;">
+            
+        </div>
         <table class=" col-sm-12 col-xs-12 table-sm table-bordered text-center table-hover">
             <thead>
                 <tr>

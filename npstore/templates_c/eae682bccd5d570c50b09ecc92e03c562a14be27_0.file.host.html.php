@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 07:57:07
+/* Smarty version 3.1.32, created on 2019-04-14 12:20:03
   from 'E:\xampp\htdocs\npstore\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2cbb3ae3e99_87209819',
+  'unifunc' => 'content_5cb309535ad737_60062774',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eae682bccd5d570c50b09ecc92e03c562a14be27' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\host.html',
-      1 => 1555221426,
+      1 => 1555234055,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2cbb3ae3e99_87209819 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cb309535ad737_60062774 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -86,6 +86,25 @@ function content_5cb2cbb3ae3e99_87209819 (Smarty_Internal_Template $_smarty_tpl)
             border-style: none;
             display: none;
             margin-top: 1% ;
+        }
+        #record_alert{
+            width: 600px;
+            height: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -300px;
+            margin-top: -250px;
+            border-style: solid;
+            border-color: #ccc;
+            background-color: #fff;
+            z-index: 3;
+            text-align: center;
+        }
+        #record_alert table{
+            position: absolute;
+            top: 25%;
+            left: 25%;
         }
 
     </style>
@@ -255,7 +274,22 @@ function content_5cb2cbb3ae3e99_87209819 (Smarty_Internal_Template $_smarty_tpl)
                     }
                 })
             }
+            
         });
+        function show_record_alert(ord){
+            $.ajax({
+                url:'http://120.101.8.8/npstore/php/client.php' ,
+                //url:'http://localhost/npstore/php/client.php',
+                data:{ action:'ord_alert' , ord:ord } ,
+                success: function( data ){
+                    $("#record_alert").html(data) ;
+                    $("#record_alert").fadeIn(300) ;
+                }
+            })
+        };
+        function btn_exit(){
+            $("#record_alert").fadeOut(300) ;   
+        };
     <?php echo '</script'; ?>
 >
 </head>
@@ -363,6 +397,9 @@ function content_5cb2cbb3ae3e99_87209819 (Smarty_Internal_Template $_smarty_tpl)
             </div>
         </div>
         <br>
+        <div id="record_alert" class="" style="display:none;">
+            
+        </div>
         <table class=" col-sm-12 col-xs-12 table-sm table-bordered text-center table-hover">
             <thead>
                 <tr>

@@ -1,8 +1,10 @@
-<?php
+﻿<?php
+    //允許另一個網域名存取
+    header('Access-Control-Allow-Origin:http://eceaiot.niu.edu.tw');
     if( isset($_GET['action'])  ){
 
-        //$client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
-        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
         $action = $_GET['action'] ;
@@ -57,15 +59,26 @@
                 break ;
             }
             case 'exe_check_id' : {
-                echo $client->exe_check_id( $_GET['id'] , $_GET['user'] ) ;
+                list( $user , $ord ) = $client->exe_check_id( $_GET['id'] , $_GET['user'] )  ;
+                echo json_encode( array(
+                    "user" => $user ,
+                    "ord" => $ord
+                ) ) ;
+            
                 break ;
             }
+            case 'ord_alert':
+                echo $client->ord_alert( $_GET['ord'] ) ;
+                break;
+            case 'exe_checkout':
+                $client->exe_checkout( $_GET['user'] , $_GET['commodity'] , $_GET['count'] , $_GET['price'] , $_GET['ord'] ) ;
+                break ;
         }
     }
     
     if( isset($_POST['imgBase64']) ){
-        //$client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
-        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
         $img = $_POST['imgBase64'] ;

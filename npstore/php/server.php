@@ -9,11 +9,14 @@
         public function exe_check_id( $id , $user ){
             global $mysql ;
             $str = "" ;
+            $ordselsql = $mysql->query('select MAX(ord) from `record`') ;
             $selectsql = $mysql->query('select * from user where `id` = ' .$id. ' and `user` = \'' .$user. '\' ') ;
             foreach ($selectsql as $user) {
-                return $user['user'] ;
+                foreach ($ordselsql as $ord) {
+                    return array( $user['user'] , ++$ord['MAX(ord)'] ) ;
+                }
             }
-            return 0 ;
+            return array(0,0) ;
         }
         public function exe_photo( $json ){
             global $mysql ;
@@ -21,7 +24,7 @@
             $price_count = 0 ;
             $i = 0 ;
                                     //  查詢    價格  從   商品資訊        哪裡   商品名字  = 辨識結果$json[3]
-            $price_sel = $mysql->query('select price from commodity_data where commodity =\'qwe\'') ;
+            $price_sel = $mysql->query('select price from commodity_data where commodity =\'' .$json[3]. '\'') ;
             foreach( $price_sel as $price ){
                 $i++ ;
                 // 中間的<td>數量</td> 希望可以從辨識回傳取得
@@ -36,16 +39,26 @@
             }
             return array($str , $price_count)  ;
         }
+        
+        function exe_checkout( $user ,$commodity , $count , $price , $ord){
+            global $mysql ;
+            $str = '' ;
+            is_array($commodity) or $commodity = array($commodity) ;
+            is_array($count) or $commodity = array($count) ;
+            is_array($price) or $commodity = array($price) ;
+            foreach( $commodity  as $k =>$commodity ){
+                $str .= '(\'' . $commodity . '\',' . $count[$k] . ',' .$price[$k] . ',' . $ord .'),' ;
+            }
+            $str = substr($str , 0 , -1) ;    
+            $insertsql = 'insert into `ord` (commodity,count,price,ord) values ' .$str. ';'  ;
+            $mysql->query($insertsql) ;
+            $mysql->query('insert into `record` (user,ord,shop) values (\'' .$user. '\',' .$ord. ',1) ') ;
+        }
+        
     }
     
     class Server extends EXE {
         
-        public function test(){
-            return md5(48763) ;
-        }
-        public function turnlight($light){   
-            return $light ;          
-        }
         public function number(){
             global $mysql ;
             $shop = $mysql->query('select shop from status') ;
@@ -110,7 +123,6 @@
                             <th>溫度</th>
                             <th>濕度</th>
                             <th>火焰</th>
-                            <th>在店人數</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,7 +136,6 @@
                                 $str .="<td>沒感測到火焰" ;
                             }
                             $str .='</td>
-                            <td>' . $status['online'] . '</td>
                         </tr>
                     </tbody>
                 </table>' ;
@@ -139,7 +150,7 @@
                 $str .= '<tr>
                         <td>' . $record['time']  . '</td>
                         <td>' . $record['user'] . '</td>
-                        <td>' . $record['ord'] . '</td>
+                        <td><a href="javascript:show_record_alert(' . $record['ord'] . ')">' . $record['ord'] . '</a></td>
                     </tr>' ;
             }
             return $str ;
@@ -152,7 +163,7 @@
                 $str .= '<tr>
                         <td>' . $record['time']  . '</td>
                         <td>' . $record['user'] . '</td>
-                        <td>' . $record['ord'] . '</td>
+                        <td> <a href="javascript:show_record_alert(' . $record['ord'] . ')">' . $record['ord'] . '</a></td>
                     </tr>' ;
             }
             return $str ;
@@ -213,7 +224,7 @@
                 $str .= '<tr>
                         <td>' . $record['time'] . '</td>
                         <td>' . $record['user'] . '</td>
-                        <td>' . $record['ord'] . '</td>
+                        <td><a href="javascript:show_record_alert(' . $record['ord'] . ')">' . $record['ord'] . '</a></td>
                     </tr>' ;
             }
             return $str ;
@@ -238,6 +249,32 @@
                     }
                 }
                 return 0 ;
+            }
+        }
+        public function ord_alert( $ord ){
+            global $mysql ;
+            $str = '<button class="btn" onclick="btn_exit()">X</button>
+                    <br>
+                    <h2>訂單編號: ' . $ord . '</h2>
+                    <br><br><table border=1>' ;
+            $f = 0 ;
+            $ord_sel = $mysql->query( 'select * from ord where ord='.$ord ) ;
+            foreach ( $ord_sel as $record ) {
+                $f = 1 ;
+                $str .= ' <tr>
+                                <td>' .$record['commodity'] .'</td>
+                                <td>' .$record['count'] . '個</td>
+                                <td>' .$record['price'] . '元</td>
+                          </tr>' ;
+                $price_count += (int)$record['price']  ;
+            }
+            if( $f ){
+                $str .= '</table>
+                        <br><br><br>
+                        <h3>總金額: ' . $price_count . ' </h3>' ;
+                return $str ;
+            }else {
+                return '' ;
             }
         }
     }
