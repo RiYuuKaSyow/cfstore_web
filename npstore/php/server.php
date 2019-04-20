@@ -6,6 +6,7 @@
     $mysql = new PDO( $dbn , $user , $pwd ) ;
     
     class EXE {
+        //QR登入
         public function exe_check_id( $id , $user ){
             global $mysql ;
             $str = "" ;
@@ -18,6 +19,7 @@
             }
             return array(0,0) ;
         }
+        //拍照辨識查詢
         public function exe_photo( $json ){
             global $mysql ;
             $str = '' ;
@@ -39,38 +41,43 @@
             }
             return array($str , $price_count)  ;
         }
-        
-        function exe_checkout( $user ,$commodity , $count , $price , $ord){
+        //結帳
+        public function exe_checkout( $user ,$commodity , $count , $price , $ord){
             global $mysql ;
             $str = '' ;
+            $price_count = 0 ;
+            $old_balance = $mysql->query('select balance from user where user=\''.$user.'\'') ;
             is_array($commodity) or $commodity = array($commodity) ;
             is_array($count) or $commodity = array($count) ;
             is_array($price) or $commodity = array($price) ;
             foreach( $commodity  as $k =>$commodity ){
                 $str .= '(\'' . $commodity . '\',' . $count[$k] . ',' .$price[$k] . ',' . $ord .'),' ;
+                $price_count += $price[$k] ;
+            }
+            foreach ($old_balance as $old ) {
+                $new_balance = $old['balance'] - $price_count ;
             }
             $str = substr($str , 0 , -1) ;    
             $insertsql = 'insert into `ord` (commodity,count,price,ord) values ' .$str. ';'  ;
             $mysql->query($insertsql) ;
             $mysql->query('insert into `record` (user,ord,shop) values (\'' .$user. '\',' .$ord. ',1) ') ;
+            $mysql->query('update `user` set `balance` =' .$new_balance. ' where `user`=\''.$user. '\'') ;
+        }
+        //儲值
+        public function exe_prepaid($user , $num){
+            global $mysql ;
+            $old_num = $mysql->query('select balance from user where user=\''.$user.'\'') ;
+            foreach( $old_num as $old ){
+                $num += $old['balance'] ;
+            }
+            $mysql->query('update `user` set `balance` =' .$num. ' where `user`=\''.$user. '\'') ;
         }
         
     }
     
     class Server extends EXE {
         
-        public function number(){
-            global $mysql ;
-            $shop = $mysql->query('select shop from status') ;
-            foreach($shop as $store){
-                if( $store['shop'] ){
-                    return "處理中" ;
-                }
-                else{
-                    return "待機中" ;
-                }
-            }
-        }
+        //店家商品資訊
         public function host_goods_show( $shop ){
             global $mysql ;
             $commodity = $mysql->query("select * from commodity_data where shop =".$shop  ) ;
@@ -92,6 +99,7 @@
             }
             return $str ;
         }
+        //首頁商品資訊
         public function index_goods_show(){
             global $mysql ;
             $commodity = $mysql->query("select * from commodity_data"  ) ;
@@ -101,10 +109,21 @@
                 if( !($i % 2) ){
                     $str .= "<tr>" ;
                 }
-                $str .='
-                <td>' . $goods['commodity']  . '</td>
-                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
-                <td>' . $goods['price'] . "</td>" ;
+                if( strpos( $goods['image'] , ',' ) ){
+                    $len = strpos( $goods['image'] , ',' ) ;
+                    $img = substr( $goods['image'] , 0 , $len ) ;
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $img.'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
+                    '<td>' . $goods['price'] . "</td>" ;
+                }else{
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $goods['image'].'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
+                    '<td>' . $goods['price'] . "</td>" ;
+                }
                 if( $i % 2 ){
                     $str .= "</tr>" ;
                 }
@@ -112,6 +131,7 @@
             }
             return $str ;
         }
+        //店家狀態資訊
         public function status_show( $shop){
             global $mysql ;
             $str = "" ;
@@ -142,6 +162,7 @@
             }
             return $str ;
         }
+        //消費紀錄-店家
         public function shop_record_show( $shop){
             global $mysql ;
             $record = $mysql->query('select * from record where shop =' .$shop ) ;
@@ -155,6 +176,7 @@
             }
             return $str ;
         }
+        //消費紀錄-消費者
         public function customer_record_show( $user ){
             global $mysql ;
             $record = $mysql->query('select * from record where user =\'' .$user. '\'') ;
@@ -172,6 +194,7 @@
             global $mysql ;
             $ord = $mysql->query('select * from ord') ;
         }
+        //店家商品搜尋
         public function commodity_search($keyword , $orderby , $shop){
             global $mysql ;
             $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\' and shop ='. $shop .' order by remainder ' . $orderby ) ;
@@ -193,6 +216,7 @@
             }
             return $str ;
         }
+        //首頁商品搜尋
         public function index_commodity_search($keyword){
             global $mysql ;
             $resulte = $mysql->query( 'select * from commodity_data where commodity like \'%' . $keyword .'%\'') ;
@@ -202,17 +226,26 @@
                 if( !($i % 2) ){
                     $str .= "<tr>" ;
                 }
-                $str .='
-                <td>' . $goods['commodity']  . '</td>
-                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
-                <td>' . $goods['price'] . "</td>" ;
-                if( $i % 2 ){
-                    $str .= "</tr>" ;
+                if( strpos( $goods['image'] , ',' ) ){
+                    $len = strpos( $goods['image'] , ',' ) ;
+                    $img = substr( $goods['image'] , 0 , $len ) ;
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $img.'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
+                    '<td>' . $goods['price'] . "</td>" ;
+                }else{
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $goods['image'].'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
+                    '<td>' . $goods['price'] . "</td>" ;
                 }
                 $i = $i+1 ;
             }
             return $str ;
         }
+        //紀錄搜尋
         public function record_search($keyword , $time_start , $time_end , $shop){
             global $mysql ;
             $str ="" ;
@@ -229,6 +262,7 @@
             }
             return $str ;
         }
+        //登入
         public function log( $who , $acc , $pwd ){
             global $mysql ;
             $str = "" ;
@@ -251,9 +285,10 @@
                 return 0 ;
             }
         }
+        //顯示訂單
         public function ord_alert( $ord ){
             global $mysql ;
-            $str = '<button class="btn" onclick="btn_exit()">X</button>
+            $str = '<button class="btn btn-outline-danger" onclick="btn_exit()">X</button>
                     <br>
                     <h2>訂單編號: ' . $ord . '</h2>
                     <br><br><table border=1>' ;
@@ -276,6 +311,16 @@
             }else {
                 return '' ;
             }
+        }
+        public function description($commodity){
+            global $mysql ;
+            $str = '<button class="btn btn-outline-danger" onclick="btn_exit()">X</button>
+                    <br>' ;
+            $description = $mysql->query('select `description` from `commodity_data` where `commodity`=\'' .$commodity. '\'' ) ;
+            foreach( $description as $d ){
+                $str .= $d['description'] ;
+            }
+            return $str ;
         }
     }
 

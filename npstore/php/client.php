@@ -1,27 +1,15 @@
 ﻿<?php
     //允許另一個網域名存取
-    header('Access-Control-Allow-Origin:http://eceaiot.niu.edu.tw');
+    header('Access-Control-Allow-Origin:http://eceaiot.niu.edu.tw/');
     if( isset($_GET['action'])  ){
 
-        $client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
-        //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
         $action = $_GET['action'] ;
         switch($action) {
             
-            case 'test' :{
-                echo $client->test() ;
-                break ;
-            }
-            case 'turnlight': {
-                 echo $client->turnlight(1) ;
-                 break ;
-            }
-            case 'number': {
-                echo $client->number() ;
-                break ;
-            }
             case 'host_goods_show': {
                 echo $client->host_goods_show($_GET['shop']) ;
                 break ;
@@ -67,12 +55,31 @@
             
                 break ;
             }
-            case 'ord_alert':
+            case 'ord_alert':{
                 echo $client->ord_alert( $_GET['ord'] ) ;
                 break;
-            case 'exe_checkout':
-                $client->exe_checkout( $_GET['user'] , $_GET['commodity'] , $_GET['count'] , $_GET['price'] , $_GET['ord'] ) ;
+            }
+            case 'description':{
+                echo $client->description($_GET['commodity']) ;
                 break ;
+            }
+        }
+    }
+    if( isset($_POST['action']) ){
+        $client_array = array( 'location'=>'http://120.101.8.8/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
+        $client = new SoapClient( null , $client_array ) ;
+        
+        $action = $_POST['action'] ;
+        switch($action){
+            case 'exe_prepaid':{
+                $client->exe_prepaid( $_POST['user'] , $_POST['prepaid_num'] ) ;
+                break ;
+            }
+            case 'exe_checkout':{
+                $client->exe_checkout( $_POST['user'] , $_POST['commodity'] , $_POST['count'] , $_POST['price'] , $_POST['ord'] ) ;
+                break ;
+            }
         }
     }
     
@@ -97,26 +104,7 @@
             "str" => $str ,
             "price_count" => $price_count
         ) ) ;
-        /*
-        echo $str ;
-        echo '<table class="t0 table table-bordered">
-            <thead class=" thead-light ">
-                <tr>
-                    <th>總價格</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="price_count">'. $price_count .'</td>
-                </tr>
-            </tbody>
-        </table>'
-        */
-        /*
-        echo '<tr>
-                <td>' . $json[3] .'</td>
-            </tr>' ; 
-        */
+
     }
     
 ?>

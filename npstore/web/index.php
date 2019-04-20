@@ -25,7 +25,7 @@
             //店家帳號?
             if( isset( $_SESSION['host'] ) ){
                 $smarty->assign('host' , $_SESSION['host']  ) ;
-                $smarty->assign('user' , 0  ) ;
+                $smarty->assign('user' , $_SESSION['acc']  ) ;
             }else{
                 $smarty->assign('host' , 0  ) ;
                 $smarty->assign('user' , $_SESSION['user']  ) ;

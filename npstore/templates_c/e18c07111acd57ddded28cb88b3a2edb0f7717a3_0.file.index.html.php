@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 10:28:27
+/* Smarty version 3.1.32, created on 2019-04-20 15:57:02
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2ef2bf3b138_08001937',
+  'unifunc' => 'content_5cbb252eb44802_49025897',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1555230136,
+      1 => 1555768621,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -90,6 +90,20 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
         #top{
             background-color: #fff;
         }
+        #description_alert{
+            width: 600px;
+            height: 500px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -300px;
+            margin-top: -250px;
+            border-style: solid;
+            border-color: #ccc;
+            background-color: #fff;
+            z-index: 3;
+            text-align: center;
+        }
     </style>
     <?php echo '<script'; ?>
  type="text/javascript">
@@ -103,11 +117,11 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
  ){
                     $("#host_link").show() ;  
                 }else{
-                    $("#member_link").html( '店家' ) ;
+                    $("#member_link").html( '<?php echo $_smarty_tpl->tpl_vars['user']->value;?>
+' ) ;
                     $("#member_link").show() ;  
                 }
             };
-            
             if( <?php echo $_smarty_tpl->tpl_vars['commodity']->value;?>
  ){
                 $("#index").hide() ;
@@ -129,27 +143,57 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                     data : { action:'index_commodity_search' , keyword:$keyword  } ,
                     success : function( search ){
                         $("#good_show").html( search ) ;
+                        for(var i = 0 ; i < $("#good_show tr td").length ; i+=3){
+                            $("#good_show tr td:eq(" + i + ")").click(function(){
+                                $.ajax({
+                                    url:'../php/client.php' ,
+                                    data:{ action:'decription' , description:$(this).html() },
+                                    success:function( d ){
+                                        $("#description_alert").html(d) ;
+                                        $("#description_alert").slideUp(200);
+                                    }
+                                })
+                            });
+                        }
                     }
                 })
             }
             function commodity_show(){
                 $.ajax({
-                    url: 'http://120.101.8.8/npstore/php/client.php' ,
-                    //url: 'http://localhost/npstore/php/client.php' ,
+                    //url: 'http://120.101.8.8/npstore/php/client.php' ,
+                    url: 'http://localhost/npstore/php/client.php' ,
                     data:{ action : 'index_goods_show' } ,
                     success : function( goods ){
                         $("#good_show").html(goods) ;
+                        
+                        for(var i = 0 ; i < $("#good_show tr td").length ; i+=3){
+                            $("#good_show tr td:eq(" + i + ")").click(function(){
+                                $.ajax({
+                                    url:'../php/client.php' ,
+                                    data:{ action:'description' , commodity:$(this).html() },
+                                    success:function( d ){
+                                        $("#description_alert").html(d) ;
+                                        $("#description_alert").slideDown(200);
+                                    }
+                                })
+                            });
+                        }
                     }
                 })
             } ;
+            
             $("#log_out").click(function(){
                 window.location.href = '../web/index.php?log=0' ;
             });
         });
+        function btn_exit(){
+            $("#description_alert").slideUp(200) ;   
+        };
     <?php echo '</script'; ?>
 >
 </head>
 <body>
+    <!---logo log row--->
     <div id="top" class=" container ">
         <div class="row">
             <div class="col-sm-3 col-xs-3">
@@ -165,6 +209,7 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                 <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
+        <!--導覽--->
         <div  class="container bg-warning">
                 <ul class="nav navbar list-inline">
                     <li>
@@ -200,7 +245,9 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                 </ul>
             
         </div>
+        <!---主要--->
         <div id="main_frame" class="">
+            <!---首頁--->
             <div id="index" class="frame_content">
                 <div id="carousel" class=" carousel slide " data-ride="carousel" data-interval="3500">
                     <div class="carousel-inner text-center">
@@ -228,6 +275,7 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                   </div>
                 </div>
             </div>
+            <!---消息--->
             <div id="news" class="frame_content" style="display:none ;">
                 <div class="container ">
                     <div class="row">
@@ -246,6 +294,10 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                     </div>
                 </div>
             </div>
+            <!---商品--->
+            <div id="description_alert" class="" style="display:none;">
+                
+            </div>
             <div id="commodity_data" class="frame_content" style="display:none ;" >
                 <div id="commodity" style="margin-top:3%;" >
                     <div class=" container">
@@ -253,8 +305,8 @@ function content_5cb2ef2bf3b138_08001937 (Smarty_Internal_Template $_smarty_tpl)
                             <div class=" col-sm-6 col-xs-6">
                                 查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">
                             </div>
-                            <div class=" col-sm-3 col-xs-3 ">
-                                <h6 id="remainder_order_resulte"></h6>
+                            <div class=" col-sm-4 col-xs-4 ">
+                                <span style="font-size:20px;">點擊商品名觀看詳細資訊</span>
                             </div>
                         </div>
                     </div>

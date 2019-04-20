@@ -5,7 +5,7 @@
     if( isset($_POST['log']) ){
         $_SESSION['acc'] = $_POST['acc'] ;
         $_SESSION['pwd'] = $_POST['pwd'] ;
-        if( isset( $_POST['host_check'] ) ){
+        if( isset( $_POST['host_check'] )  ){
             $_SESSION['host'] = 1 ;
         }else{
             $_SESSION['user'] = $_POST['acc'] ;

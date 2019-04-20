@@ -57,6 +57,20 @@
         #top{
             background-color: #fff;
         }
+        #description_alert{
+            width: 600px;
+            height: 500px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -300px;
+            margin-top: -250px;
+            border-style: solid;
+            border-color: #ccc;
+            background-color: #fff;
+            z-index: 3;
+            text-align: center;
+        }
     </style>
     <script type="text/javascript">
         $(function(){
@@ -67,11 +81,10 @@
                 if( {$host} ){
                     $("#host_link").show() ;  
                 }else{
-                    $("#member_link").html( '店家' ) ;
+                    $("#member_link").html( '{$user}' ) ;
                     $("#member_link").show() ;  
                 }
             };
-            
             if( {$commodity} ){
                 $("#index").hide() ;
                 commodity_show() ;
@@ -91,26 +104,56 @@
                     data : { action:'index_commodity_search' , keyword:$keyword  } ,
                     success : function( search ){
                         $("#good_show").html( search ) ;
+                        for(var i = 0 ; i < $("#good_show tr td").length ; i+=3){
+                            $("#good_show tr td:eq(" + i + ")").click(function(){
+                                $.ajax({
+                                    url:'../php/client.php' ,
+                                    data:{ action:'decription' , description:$(this).html() },
+                                    success:function( d ){
+                                        $("#description_alert").html(d) ;
+                                        $("#description_alert").slideUp(200);
+                                    }
+                                })
+                            });
+                        }
                     }
                 })
             }
             function commodity_show(){
                 $.ajax({
-                    url: 'http://120.101.8.8/npstore/php/client.php' ,
-                    //url: 'http://localhost/npstore/php/client.php' ,
+                    //url: 'http://120.101.8.8/npstore/php/client.php' ,
+                    url: 'http://localhost/npstore/php/client.php' ,
                     data:{ action : 'index_goods_show' } ,
                     success : function( goods ){
                         $("#good_show").html(goods) ;
+                        
+                        for(var i = 0 ; i < $("#good_show tr td").length ; i+=3){
+                            $("#good_show tr td:eq(" + i + ")").click(function(){
+                                $.ajax({
+                                    url:'../php/client.php' ,
+                                    data:{ action:'description' , commodity:$(this).html() },
+                                    success:function( d ){
+                                        $("#description_alert").html(d) ;
+                                        $("#description_alert").slideDown(200);
+                                    }
+                                })
+                            });
+                        }
                     }
                 })
             } ;
+            
             $("#log_out").click(function(){
                 window.location.href = '../web/index.php?log=0' ;
             });
         });
+        function btn_exit(){
+            $("#description_alert").slideUp(200) ;   
+        };
     </script>
 </head>
 <body>
+    <!---logo log row--->
     <div id="top" class=" container ">
         <div class="row">
             <div class="col-sm-3 col-xs-3">
@@ -126,6 +169,7 @@
                 <button type="submit" id="log_out" class="float-right btn btn-sm btn-outline-warning "name="log_out" style="display:none;">登出</button>
             </div>
         </div>
+        <!--導覽--->
         <div  class="container bg-warning">
                 <ul class="nav navbar list-inline">
                     <li>
@@ -161,7 +205,9 @@
                 </ul>
             
         </div>
+        <!---主要--->
         <div id="main_frame" class="">
+            <!---首頁--->
             <div id="index" class="frame_content">
                 <div id="carousel" class=" carousel slide " data-ride="carousel" data-interval="3500">
                     <div class="carousel-inner text-center">
@@ -189,6 +235,7 @@
                   </div>
                 </div>
             </div>
+            <!---消息--->
             <div id="news" class="frame_content" style="display:none ;">
                 <div class="container ">
                     <div class="row">
@@ -207,6 +254,10 @@
                     </div>
                 </div>
             </div>
+            <!---商品--->
+            <div id="description_alert" class="" style="display:none;">
+                
+            </div>
             <div id="commodity_data" class="frame_content" style="display:none ;" >
                 <div id="commodity" style="margin-top:3%;" >
                     <div class=" container">
@@ -214,8 +265,8 @@
                             <div class=" col-sm-6 col-xs-6">
                                 查詢 : <input id="commodity_search" type="text" name="" value="" placeholder="輸入商品名">
                             </div>
-                            <div class=" col-sm-3 col-xs-3 ">
-                                <h6 id="remainder_order_resulte"></h6>
+                            <div class=" col-sm-4 col-xs-4 ">
+                                <span style="font-size:20px;">點擊商品名觀看詳細資訊</span>
                             </div>
                         </div>
                     </div>
