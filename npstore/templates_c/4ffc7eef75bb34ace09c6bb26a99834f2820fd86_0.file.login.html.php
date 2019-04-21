@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 10:28:36
+/* Smarty version 3.1.32, created on 2019-04-21 05:37:03
   from 'E:\xampp\htdocs\npstore\html\login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb2ef3489abe8_00554637',
+  'unifunc' => 'content_5cbbe55f029672_78283223',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4ffc7eef75bb34ace09c6bb26a99834f2820fd86' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\login.html',
-      1 => 1555229753,
+      1 => 1555817800,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb2ef3489abe8_00554637 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cbbe55f029672_78283223 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -139,8 +139,8 @@ function content_5cb2ef3489abe8_00554637 (Smarty_Internal_Template $_smarty_tpl)
                     <input type="text" name="log" value="1" style="display:none;">
                     <input type="text" name="host" style="display:none;">
                     <input type="checkbox" id="host_check" name="host_check"><span style="font-size:1; color:#777">商家帳號</span><br><br>
-                    <button type="button" id="leave" name="button" class="btn btn-sm btn-outline-danger">取消</button>
                     <button type="button" id="log_btn" class=" btn btn-sm btn-outline-warning ">登入</button>
+                    <button type="button" id="leave" name="button" class="btn btn-sm btn-outline-danger">取消</button>
                 </div>
             </div>
         </form>

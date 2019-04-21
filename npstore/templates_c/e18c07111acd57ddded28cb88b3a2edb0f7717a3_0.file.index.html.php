@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-20 15:57:02
+/* Smarty version 3.1.32, created on 2019-04-21 05:36:25
   from 'E:\xampp\htdocs\npstore\html\index.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cbb252eb44802_49025897',
+  'unifunc' => 'content_5cbbe5392744c9_99915931',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e18c07111acd57ddded28cb88b3a2edb0f7717a3' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\index.html',
-      1 => 1555768621,
+      1 => 1555817775,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cbbe5392744c9_99915931 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -85,7 +85,8 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
             background-color: #fff;
         }
         .frame_content{
-            min-height:77vh ;
+            display:none;
+            min-height:90vh ;
         }
         #top{
             background-color: #fff;
@@ -109,6 +110,10 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
  type="text/javascript">
         $(function(){
             
+            $("#log_out").click(function(){
+                window.location.replace('?show=logout') ;
+            });
+            
             if( <?php echo $_smarty_tpl->tpl_vars['login']->value;?>
  ){
                 $("#log_frame").hide() ;
@@ -122,17 +127,29 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
                     $("#member_link").show() ;  
                 }
             };
-            if( <?php echo $_smarty_tpl->tpl_vars['commodity']->value;?>
- ){
-                $("#index").hide() ;
-                commodity_show() ;
-                $("#commodity_data").show();
-            };
-            if( <?php echo $_smarty_tpl->tpl_vars['news']->value;?>
- ){
-                $("#index").hide() ;
-                $("#news").show();
-            };
+            
+            switch ('<?php echo $_smarty_tpl->tpl_vars['show']->value;?>
+') {
+                
+                case 'commodity':{
+                    commodity_show() ;
+                    $("#commodity_data").show();
+                    break;
+                }
+                case 'news':{
+                    $("#news").show();
+                    break;
+                }
+                case 'member':{
+                    $("#host_frame").show();
+                    break;
+                }
+                default:{
+                    $("#index").show();
+                    break
+                }
+            }
+            
             $("#commodity_search").keyup(function(){
                 goods_search( $("#commodity_search").val() ) ;
             });
@@ -182,9 +199,6 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
                 })
             } ;
             
-            $("#log_out").click(function(){
-                window.location.href = '../web/index.php?log=0' ;
-            });
         });
         function btn_exit(){
             $("#description_alert").slideUp(200) ;   
@@ -223,23 +237,18 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
                         </a> 
                     </li>
                     <li> 
-                        <a href="?news=show">
+                        <a href="?show=news">
                             消息專區
                         </a> 
                     </li>
                     <li>
-                        <a href="?commodity=show">
+                        <a href="?show=commodity">
                             商品專區
                         </a>
                     </li>
                     <li>
-                        <a id="member_link" href="../web/host.php" style="display:none;" >
+                        <a id="member_link" href="?show=member" style="display:none;" >
                             
-                        </a>
-                    </li>
-                    <li>
-                        <a id="host_link" href="../web/host.php" style="display:none;" >
-                            店家專區
                         </a>
                     </li>
                 </ul>
@@ -276,7 +285,7 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
                 </div>
             </div>
             <!---消息--->
-            <div id="news" class="frame_content" style="display:none ;">
+            <div id="news" class="frame_content" >
                 <div class="container ">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12">
@@ -298,7 +307,7 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
             <div id="description_alert" class="" style="display:none;">
                 
             </div>
-            <div id="commodity_data" class="frame_content" style="display:none ;" >
+            <div id="commodity_data" class="frame_content">
                 <div id="commodity" style="margin-top:3%;" >
                     <div class=" container">
                         <div class=" row ">
@@ -326,6 +335,10 @@ function content_5cbb252eb44802_49025897 (Smarty_Internal_Template $_smarty_tpl)
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <!--紀錄-->
+            <div id="host_frame" class="frame_content">
+                <iframe src="../web/host.php" width="100%" height="555vh" border="0"></iframe>
             </div>
         </div>
     </div>

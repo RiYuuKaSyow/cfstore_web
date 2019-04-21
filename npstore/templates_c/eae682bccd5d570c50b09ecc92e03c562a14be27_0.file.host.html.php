@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.32, created on 2019-04-14 12:20:03
+/* Smarty version 3.1.32, created on 2019-04-21 05:27:28
   from 'E:\xampp\htdocs\npstore\html\host.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.32',
-  'unifunc' => 'content_5cb309535ad737_60062774',
+  'unifunc' => 'content_5cbbe32005abb5_39118396',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'eae682bccd5d570c50b09ecc92e03c562a14be27' => 
     array (
       0 => 'E:\\xampp\\htdocs\\npstore\\html\\host.html',
-      1 => 1555234055,
+      1 => 1555817243,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5cb309535ad737_60062774 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5cbbe32005abb5_39118396 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -51,10 +51,9 @@ function content_5cb309535ad737_60062774 (Smarty_Internal_Template $_smarty_tpl)
     <title>無人商店</title>
     <style type="text/css">
         .option{
-            width:11%;
+            width:20%;
             position:fixed;
             top:23%;
-            left:2%;
         }
         .option li{
             list-style: none ;
@@ -327,7 +326,7 @@ function content_5cb309535ad737_60062774 (Smarty_Internal_Template $_smarty_tpl)
             </li>
         </ul>
     </div>
-    
+    <!---
     <div id="btn-exlo" >
         <button id='exit' class="btn-outline-info btn" type="button" name="button">
             離開
@@ -336,6 +335,7 @@ function content_5cb309535ad737_60062774 (Smarty_Internal_Template $_smarty_tpl)
             登出
         </button>
     </div>
+    --->
     <div id="account_set" class="main_frame">
         <br>
         <div class="container">
