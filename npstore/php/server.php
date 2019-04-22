@@ -5,6 +5,28 @@
     $dbn =  "mysql:host=localhost;dbname=store;charset=utf8" ;
     $mysql = new PDO( $dbn , $user , $pwd ) ;
     
+    //抓第n個字串位置
+    function mystrpos( $str , $key , $offset ){
+        if( strpos($str,$key) === false ){
+            return false ;
+        }
+        $j = 0 ;
+        $strlen = strlen($str) ;
+        $keylen = strlen($key) ;
+        for($i = 0 ; $i < $strlen ; $i++){
+            $words[$i] = substr( $str ,$i , $keylen );     
+            if( $words[$i] === $key ){
+                $place[$j] = $i ;
+                $j++ ;
+            }
+        }
+        if( $offset >= $j ){
+            return false ;            
+        }else{
+            return $place[$offset]+1 ;
+        }
+    }
+    
     class EXE {
         //QR登入
         public function exe_check_id( $id , $user ){
@@ -20,26 +42,40 @@
             return array(0,0) ;
         }
         //拍照辨識查詢
-        public function exe_photo( $json ){
+        public function exe_photo( $res ){
+            
+            //SQL語法陣列處理
+            $i = 0 ;
+            $j = 0 ;
+            for(  ;$start = mystrpos($res[0],'\'',$i) ; $i+=2 ){
+                
+                $end = mystrpos($res[0],'\'',$i+1) ;
+                $str = substr($res[0],$start ,$end-$start-1);
+                $sql[$j] = 'select * from commodity_data where commodity =\'' .$str. '\'' ;
+                $j++ ;
+                
+            }
+            //查詢價格
             global $mysql ;
             $str = '' ;
             $price_count = 0 ;
-            $i = 0 ;
-                                    //  查詢    價格  從   商品資訊        哪裡   商品名字  = 辨識結果$json[3]
-            $price_sel = $mysql->query('select price from commodity_data where commodity =\'' .$json[3]. '\'') ;
-            foreach( $price_sel as $price ){
-                $i++ ;
-                // 中間的<td>數量</td> 希望可以從辨識回傳取得
-                // <td>' . $json[?] .'
-                $str .= '<tr>
-                            <td>' . $json[3] . '</td>
-                            <td>1</td>
-                            <td id="com_price' .$i. '">' . $price['price'] . '</td>
-                        </tr>' ;
-                //$price_count += (int)$json[?] * (int)$prince['price']
-                $price_count += (int)$price['price'] ;
+            for( $i = 0 ; $i < $j ; $i++ ){
+                
+                $price = $mysql->query( $sql[$i] ) ;
+                foreach ($price as $p ) {
+                    // 中間的<td>數量</td> 希望可以從辨識回傳取得
+                    $str .= '<tr>
+                                <td>' . $p['commodity'] . '</td>
+                                <td>1</td>
+                                <td id="com_price' .$i. '">' . $p['price'] . '</td>
+                            </tr>' ;
+                    //$price_count += (int)$json[?] * (int)$prince['price']
+                    $price_count += (int)$p['price'] ;
+                }
+                
             }
             return array($str , $price_count)  ;
+            
         }
         //結帳
         public function exe_checkout( $user ,$commodity , $count , $price , $ord){

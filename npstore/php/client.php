@@ -88,18 +88,28 @@
         //$client_array = array( 'location'=>'http://localhost/npstore/php/server.php' , 'uri'=>'48763' ) ;
         $client = new SoapClient( null , $client_array ) ;
         
+        //圖片存檔
         $img = $_POST['imgBase64'] ;
         $img = str_replace('data:image/png;base64,' , '' ,$img) ;
         $img = str_replace(' ' , '+' , $img ) ;
         $data = base64_decode($img) ;
         $file = '../img/test.png' ;
         file_put_contents($file,$data) ;        
-        exec('curl -X POST -F image=@' .$file. ' http://120.101.8.8:5000/' , $json) ;
-        $json = str_replace("\"" , '' , $json) ;
-        $json = str_replace("," , '' , $json) ;
-        $json = str_replace("label:" , '' , $json) ;
         
-        list( $str , $price_count ) = $client->exe_photo($json) ;
+        //呼叫辨識service
+        exec('curl -X POST -F image=@' .$file. '  http://120.101.8.8:4000/' , $res) ;
+        //字串前處理
+        $res = str_replace("\"" , '' , $res) ;
+        $res = str_replace("{" , '' , $res) ;
+        $res = str_replace("}" , '' , $res) ;
+        $res = str_replace("]" , '' , $res) ;
+        $res = str_replace("[" , '' , $res) ;
+        $res = str_replace("," , '' , $res) ;
+        $res = str_replace(":" , '' , $res) ;
+        $res = str_replace("0." , '' , $res) ;
+        //字串後處理抓商品
+        list( $str , $price_count ) = $client->exe_photo($res) ;
+        //處理回傳字串印出
         echo json_encode( array(
             "str" => $str ,
             "price_count" => $price_count
