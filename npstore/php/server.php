@@ -50,7 +50,9 @@
             for(  ;$start = mystrpos($res[0],'\'',$i) ; $i+=2 ){
                 
                 $end = mystrpos($res[0],'\'',$i+1) ;
+                $num_start = mystrpos($res[0],':',$i) ;
                 $str = substr($res[0],$start ,$end-$start-1);
+                $count[$str] = (int)substr($res[0],$num_start+1,1)  ;
                 $sql[$j] = 'select * from commodity_data where commodity =\'' .$str. '\'' ;
                 $j++ ;
                 
@@ -66,11 +68,11 @@
                     // 中間的<td>數量</td> 希望可以從辨識回傳取得
                     $str .= '<tr>
                                 <td>' . $p['commodity'] . '</td>
-                                <td>1</td>
-                                <td id="com_price' .$i. '">' . $p['price'] . '</td>
+                                <td>'.  $count[ $p['commodity'] ] .'</td>
+                                <td id="com_price' .$i. '">' .  $count[ $p['commodity'] ]*$p['price'] . '</td>
                             </tr>' ;
                     //$price_count += (int)$json[?] * (int)$prince['price']
-                    $price_count += (int)$p['price'] ;
+                    $price_count += (int)$count[ $p['commodity'] ]*$p['price'] ;
                 }
                 
             }
@@ -123,11 +125,22 @@
                 if( !($i % 2) ){
                     $str .= "<tr>" ;
                 }
-                $str .='
-                <td>' . $goods['commodity']  . '</td>
-                <td> <img src="'. $goods['image'] .'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>
-                <td>' . $goods['price'] . "</td>
-                <td>" . $goods['remainder'] ."</td>" ;
+                if( strpos( $goods['image'] , ',' ) ){
+                    $len = strpos( $goods['image'] , ',' ) ;
+                    $img = substr( $goods['image'] , 0 , $len ) ;
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $img.'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    '<td>' . $goods['price'] . "</td>
+                    <td>" . $goods['remainder'] ."</td>" ;
+                }else{
+                    $str .='
+                    <td>' . $goods['commodity']  . '</td>
+                    <td> <img src="'. $goods['image'].'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
+                    '<td>' . $goods['price'] . "</td>
+                    <td>" . $goods['remainder'] ."</td>" ;
+                }
+                
                 if( $i % 2 ){
                     $str .= "</tr>" ;
                 }
@@ -151,13 +164,11 @@
                     $str .='
                     <td>' . $goods['commodity']  . '</td>
                     <td> <img src="'. $img.'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
-                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
                     '<td>' . $goods['price'] . "</td>" ;
                 }else{
                     $str .='
                     <td>' . $goods['commodity']  . '</td>
                     <td> <img src="'. $goods['image'].'" alt="" style="transform:rotate(90deg);width=100%;height=100%;"> </td>'.
-                    //<td style="font-size:12px;">' . $goods['description'] . '</td>
                     '<td>' . $goods['price'] . "</td>" ;
                 }
                 if( $i % 2 ){
@@ -173,18 +184,12 @@
             $str = "" ;
             $status = $mysql->query('select * from status') ;
             foreach ( $status as $status ) {
-                 $str .='<table class="table text-center table-bordered">
-                    <thead class= " thead-light ">
+                 $str .='
                         <tr>
-                            <th>溫度</th>
-                            <th>濕度</th>
-                            <th>火焰</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>' . $status['co1'] . '</td>
-                            <td>' . $status['co2'] . '</td>' ;
+                            <td>' . $status['hum'] . '%</td>
+                            <td>' . $status['temp'] . '˚C</td>
+                            <td>' . $status['co1'] . 'ppm</td>
+                            <td>' . $status['co2'] . 'ppm</td>' ;
                             if( $status['fire'] ){
                                 $str .= '<td style="color:red;">感測到火焰'  ;
                             }
@@ -192,9 +197,7 @@
                                 $str .="<td>沒感測到火焰" ;
                             }
                             $str .='</td>
-                        </tr>
-                    </tbody>
-                </table>' ;
+                        </tr>' ;
             }
             return $str ;
         }
@@ -327,9 +330,10 @@
             $str = '<button class="btn btn-outline-danger" onclick="btn_exit()">X</button>
                     <br>
                     <h2>訂單編號: ' . $ord . '</h2>
-                    <br><br><table border=1>' ;
+                    <br><br><table>' ;
             $f = 0 ;
             $ord_sel = $mysql->query( 'select * from ord where ord='.$ord ) ;
+            $price_count = 0 ;
             foreach ( $ord_sel as $record ) {
                 $f = 1 ;
                 $str .= ' <tr>
@@ -345,7 +349,9 @@
                         <h3>總金額: ' . $price_count . ' </h3>' ;
                 return $str ;
             }else {
-                return '' ;
+                $str .= '</table>
+                        <h3>總金額: ' . $price_count . ' </h3>' ;
+                return $str ;
             }
         }
         public function description($commodity){

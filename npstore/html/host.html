@@ -56,7 +56,7 @@
         #record_alert{
             width: 600px;
             height: 500px;
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
             margin-left: -300px;
@@ -68,9 +68,20 @@
             text-align: center;
         }
         #record_alert table{
-            position: absolute;
+            width:300px;
+            font-size:150%;
+            position: fixed;
             top: 25%;
-            left: 25%;
+            left: 35%;
+        }
+         #record_alert td{
+            line-height:33px;
+         }
+        #record_alert h3{
+            text-align:left;
+            position:fixed;
+            left: 42%;
+            top:80%;
         }
 
     </style>
@@ -299,36 +310,22 @@
         <div class="border bg-info text-white h4">
             現在
         </div>
-        <div id="surroding_table">
+        <div >
+            <table class="table text-center table-bordered">
+               <thead class= " thead-light ">
+                   <tr>
+                       <th>濕度(%)</th>
+                       <th>溫度(˚C)</th>
+                       <th>一氧化碳(ppm)</th>
+                       <th>二氧化碳(ppm)</th>
+                       <th>火焰</th>
+                   </tr>
+               </thead>
+               <tbody id="surroding_table">
+                   
+               </tbody>
+           </table>
         </div>
-        <div class="border bg-warning text-white" >
-            <div class="h4">
-                紀錄
-            </div>
-            <div class="text-right h6">
-                <a href="?select=1&more_shop_record=true">更多</a>
-            </div>
-        </div>
-        <table id="customer_table" class="table text-center table-bordered">
-            <thead class=" thead-light ">
-                <tr>
-                    <th>日期</th>
-                    <th>溫度</th>
-                    <th>濕度</th>
-                    <th>火焰</th>
-                    <th>當日累積人數</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2019/02/05</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>123</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <div id="record" class="main_frame">
         <div class="container">

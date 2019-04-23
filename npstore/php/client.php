@@ -1,4 +1,4 @@
-﻿<?php
+<?php
     //允許另一個網域名存取
     header('Access-Control-Allow-Origin:http://eceaiot.niu.edu.tw/');
     if( isset($_GET['action'])  ){
@@ -90,23 +90,15 @@
         
         //圖片存檔
         $img = $_POST['imgBase64'] ;
-        $img = str_replace('data:image/png;base64,' , '' ,$img) ;
+        $img = str_replace('data:image/jpeg;base64,' , '' ,$img) ;
         $img = str_replace(' ' , '+' , $img ) ;
         $data = base64_decode($img) ;
-        $file = '../img/test.png' ;
+        $file = '../img/test.jpg' ;
         file_put_contents($file,$data) ;        
         
         //呼叫辨識service
         exec('curl -X POST -F image=@' .$file. '  http://120.101.8.8:4000/' , $res) ;
-        //字串前處理
-        $res = str_replace("\"" , '' , $res) ;
-        $res = str_replace("{" , '' , $res) ;
-        $res = str_replace("}" , '' , $res) ;
-        $res = str_replace("]" , '' , $res) ;
-        $res = str_replace("[" , '' , $res) ;
-        $res = str_replace("," , '' , $res) ;
-        $res = str_replace(":" , '' , $res) ;
-        $res = str_replace("0." , '' , $res) ;
+ 
         //字串後處理抓商品
         list( $str , $price_count ) = $client->exe_photo($res) ;
         //處理回傳字串印出
